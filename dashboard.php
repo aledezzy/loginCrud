@@ -1,4 +1,5 @@
 <?php
+	echo "ciao";
     /*include the class connection.php*/
     include_once("includes/connection.php");
     $connessione = Connection::new();
@@ -18,15 +19,16 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="styles/dashboard.css" rel="stylesheet" />
+    <link href="styles/dashboard.css" rel="stylesheet"/>
     <script src="script/divSelector.js"></script>
 </head>
 <body>
+    <h1>Ciao</h1>
     <div class="itemsMargin" id="dashboardSidebar">
         <button onclick="showDiv(1)">Button 1</button>
         <button onclick="showDiv(2)">Button 2</button>
