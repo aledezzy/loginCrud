@@ -1,4 +1,5 @@
 <?php
+	echo "ciao";
     /*include the class connection.php*/
     include_once("includes/connection.php");
     $connessione = Connection::new();
