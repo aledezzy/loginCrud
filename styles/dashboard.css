@@ -1,25 +1,77 @@
+body,html {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.itemsMargin{
+    margin: 2px;
+}
+
 body{
     height: 100svh;
     display: grid;
-    grid-template-columns: 300px 1fr;
+    grid-template-columns: 200px 1fr;
     grid-template-rows: 60px 1fr;
     grid-template-areas: 
         "sidebar header"
         "sidebar main";
+    
 }
 
-.item1{
+.gridTemplate{
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+}
+
+.item{
+    background-color: black;
+    height: 100px;
+    width: 100px;
+}
+
+#dashboardSidebar{
+
     grid-area: sidebar;
     background-color: aqua;
 }
 
-.item2{
+#dashboardHeader{
     grid-area: header;
     background-color: green;
 }
 
 
-.item3{
+#dashboardMainContent{
     grid-area: main;
     background-color: red;
 }    
+
+#div1{
+    display: none;
+    grid-area: main;
+    height: 100%;
+}
+
+#div2{
+    display: none;
+    grid-area: main;
+    height: auto;
+}
+
+#div3{
+    display: none;
+    grid-area: main;
+    height: auto;
+}
+@media only screen and (max-width: 600px) {
+    body {
+        grid-template-columns:  1fr;
+        grid-template-rows: 60px 200px 1fr;
+        grid-template-areas: 
+            "header "
+            "sidebar"
+            "main";
+    }
+  }
