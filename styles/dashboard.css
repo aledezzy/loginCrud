@@ -29,6 +29,11 @@ body{
     background-color: black;
     height: 100px;
     width: 100px;
+    margin: auto;
+}
+
+.parentHeight{
+    height: inherit;
 }
 
 #dashboardSidebar{
@@ -48,23 +53,10 @@ body{
     background-color: red;
 }    
 
-#div1{
+#div1, #div2, #div3{
     display: none;
-    grid-area: main;
-    height: 100%;
 }
 
-#div2{
-    display: none;
-    grid-area: main;
-    height: auto;
-}
-
-#div3{
-    display: none;
-    grid-area: main;
-    height: auto;
-}
 @media only screen and (max-width: 600px) {
     body {
         grid-template-columns:  1fr;
@@ -74,4 +66,9 @@ body{
             "sidebar"
             "main";
     }
-  }
+
+    .gridTemplate{
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+    }
+}

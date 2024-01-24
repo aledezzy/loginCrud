@@ -34,53 +34,57 @@
     </div>
 
     <div class="itemsMargin" id="dashboardHeader">
+        
+        </div>
 
+
+        
+        <div class="itemsMargin" id="dashboardMainContent" style="height:inherit;">
+        <div id="div1" class="content-div gridTemplate parentHeight gridCenter">
+            <div class="item">
+
+            </div>
+            <div class="item">
+
+            </div>
+            <div class="item">
+
+            </div>
+            <div class="item">
+
+            </div>
+        </div>
+
+        <div id="div2" class="content-div gridTemplate parentHeight gridCenter">
+            <div class="item">
+
+            </div>
+            <div class="item">
+
+            </div>
+            <div class="item">
+
+            </div>
+            <div class="item">
+
+            </div>
+        </div>
+
+        <div id="div3" class="content-div gridTemplate parentHeight gridCenter">
+            <div class="item">
+
+            </div>
+            <div class="item">
+
+            </div>
+            <div class="item">
+
+            </div>
+            <div class="item">
+
+            </div>
+        </div>
     </div>
-
-    <main class="itemsMargin" id="dashboardMainContent">  
-        <div id="div1" class="content-div gridTemplate">
-            <div class="item">
-
-            </div>
-            <div class="item">
-
-            </div>
-            <div class="item">
-
-            </div>
-            <div class="item">
-
-            </div>
-        </div>
-
-        <div id="div2" class="content-div gridTemplate">
-            <div class="item">
-            </div>
-
-            <div class="item">
-            </div>
-
-            <div class="item">
-            </div>
-
-            <div class="item">
-            </div>
-        </div>
-
-        <div id="div3" class="content-div gridTemplate">
-            <div class="item">
-            </div>
-            <div class="item">
-
-            </div>
-            <div class="item">
-
-            </div>
-            <div class="item">
-
-            </div>
-        </div>
-    </main>
 </body>
 </html>
 
