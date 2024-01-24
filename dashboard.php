@@ -44,7 +44,7 @@
         <div class="itemsMargin" id="dashboardMainContent" style="height:inherit;">
         <div id="div1" class="content-div gridTemplate parentHeight gridCenter">
             <div class="item">
-
+                <h1 style="color: blue;">dddd</h1>
             </div>
             <div class="item">
 
@@ -59,7 +59,7 @@
 
         <div id="div2" class="content-div gridTemplate parentHeight gridCenter">
             <div class="item">
-
+            <h1 style="color: blue;">gggg</h1>
             </div>
             <div class="item">
 
@@ -74,7 +74,7 @@
 
         <div id="div3" class="content-div gridTemplate parentHeight gridCenter">
             <div class="item">
-
+            <h1 style="color: blue;">vbvbbbbb</h1>
             </div>
             <div class="item">
 
