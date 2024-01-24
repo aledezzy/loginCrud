@@ -12,20 +12,32 @@
 <body>
 <div class="fullViewport flex flex-center">
             <form class="loginBoard flex flex-center" action="dashboard.php" method="post" class="loginPage">
-                    <img style="display:inline; height:64px; width:64px;" src="images/newUserIMG.svg" alt="UserIMG">
-                <div class="fullWidth">
-                <p style="margin-bottom:5px;">Nome Utente</p>
-                <input class="loginButton loginBorder" type="text" name="UserID"></input>
+
+                <img style="display:inline; height:64px; width:64px;" src="images/newUserIMG.svg" alt="UserIMG">
+
+                <div class="flex" style="gap : 1em;">
+                    <div class="fullWidth">
+                        <p style="margin-bottom:5px;">Nome</p>
+                        <input class="loginButton loginBorder" type="text" name="UserName"></input>
+                    </div>
+
+                    <div class="fullWidth">
+                        <p style="margin-bottom:5px;">Cognome</p>
+                        <input class="loginButton loginBorder" type="text" name="UserSurname"></input>
+                    </div>
                 </div>
 
                 <div class="fullWidth">
-                <p style="margin-bottom:5px;">Password</p>
-                <input  class="loginButton loginBorder" type="text" name="UserPWD"></input>
+                    <p style="margin-bottom:5px;">E-mail</p>
+                    <input class="loginButton loginBorder" type="email" name="UserMail"></input>
+                </div>
+
+                <div class="fullWidth">
+                    <p style="margin-bottom:5px;">Password</p>
+                    <input  class="loginButton loginBorder" type="password" name="UserPWD"></input>
                 </div>
 
                 <input  class="submitButton loginBorder" type="submit"  value="Accedi"></input>
-            
-
             </form>
         </div>
 

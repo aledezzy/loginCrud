@@ -2,6 +2,19 @@
     /*include the class connection.php*/
     include_once("includes/connection.php");
     $connessione = Connection::new();
+    $userMail = $_POST['UserMail'];
+    // Get UserMail from table Utenti
+    $query = "SELECT email FROM utenti WHERE email = $userMail";
+    $result = $connessione->query($query);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $userMail = $row['email'];
+            // Use the UserMail as needed
+        }
+    
+    
+    
 ?>
 
 <!DOCTYPE html>
@@ -10,25 +23,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="styles/style.css" rel="stylesheet" />
+    <link href="styles/dashboard.css" rel="stylesheet" />
 </head>
 <body>
-<div class="fullViewport flex" style="flex-direction:column;">
-    <header>
-        <nav>
-        <ul class="flex" style="list-style-type:none; gap:1em; align-items:center;">
-            <li><img src="images/header-logo.svg" alt=""></li>
-            <li><a class="no-dec" href="index.php">Home</a></li>
-            <li><a class="no-dec" href="login.php">Accedi</a></li>
-            <li><a class="no-dec" href="signup.php">Registrati</a></li>
-        </ul> 
-        </nav>
-    </header>
-    <div class="dashBoardGrid" style="flex-grow : 1;">
-        <div id="userGrid"></div>
-        <div id="bookGrid"></div>
-        <div id="managementGrid"></div>
+    <div class="item1">
+
     </div>
-</div>
+
+    <div class="item2">
+
+    </div>
+
+    <div class="item3">
+
+    </div>
 </body>
 </html>
+
+<?php
+    }else{
+        die();
+    }
+?>

@@ -1,4 +1,5 @@
 <?php
+   
 ?>
 
 <!DOCTYPE html>
@@ -16,13 +17,13 @@
                 <img style="display:inline; height:64px; width:64px;"src="images/userBadge.svg" alt="UserIMG">
 
                 <div class="fullWidth">
-                <p style="margin-bottom:5px;">Nome Utente</p>
-                <input class="loginButton loginBorder" type="text" name="UserID"></input>
+                <p style="margin-bottom:5px;">E-mail</p>
+                <input class="loginButton loginBorder" type="text" name="UserMail"></input>
                 </div>
 
                 <div class="fullWidth">
                 <p style="margin-bottom:5px;">Password</p>
-                <input  class="loginButton loginBorder" type="text" name="UserPWD"></input>
+                <input  class="loginButton loginBorder" type="password" name="UserPWD"></input>
                 </div>
                 <input  class="submitButton loginBorder" type="submit"  value="Accedi"></input>
                 <p class="UnregisteredButton" style="margin-left: auto;"><a href="signup.php" >Non sei un utente registrato?</a></p>

@@ -1,0 +1,25 @@
+body{
+    height: 100svh;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 60px 1fr;
+    grid-template-areas: 
+        "sidebar header"
+        "sidebar main";
+}
+
+.item1{
+    grid-area: sidebar;
+    background-color: aqua;
+}
+
+.item2{
+    grid-area: header;
+    background-color: green;
+}
+
+
+.item3{
+    grid-area: main;
+    background-color: red;
+}    
