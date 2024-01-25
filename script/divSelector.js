@@ -7,6 +7,6 @@ function showDiv(number) {
 
 
     document.getElementById('div' + number).style.display = 'grid';
-    //document.getElementById('div' + number).style.gap = '3px';
+    document.getElementById('div' + number).style.gap = '1em';
 
 }

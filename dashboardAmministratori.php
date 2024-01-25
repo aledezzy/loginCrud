@@ -1,5 +1,6 @@
 <?php
-echo "ciaoffsffbdfbfb";
+/*include the class connection.php*/
+include 'includes/connection.php';
 ?>
 
 <!DOCTYPE html>
@@ -14,15 +15,16 @@ echo "ciaoffsffbdfbfb";
 </head>
 
 <body>
-    <h1>Ciao</h1>
     <div class="itemsMargin" id="dashboardSidebar">
         <button onclick="showDiv(1)">Button 1</button>
         <button onclick="showDiv(2)">Button 2</button>
         <button onclick="showDiv(3)">Button 3</button>
     </div>
 
-    <div class="itemsMargin" id="dashboardHeader">
-
+    <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">
+        <div style="background-color: red; width:30%">
+            <a href="logout.php">Logout<a>
+        </div>
     </div>
 
 

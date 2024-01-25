@@ -3,12 +3,6 @@ body,html {
     padding: 0;
 }
 
-
-
-.itemsMargin{
-    margin: 2px;
-}
-
 body{
     height: 100svh;
     display: grid;
@@ -19,6 +13,11 @@ body{
         "sidebar main";
     
 }
+
+.itemsMargin{
+    margin: 2px;
+}
+
 
 .gridTemplate{
     grid-template-columns: repeat(2, 1fr);
@@ -34,6 +33,10 @@ body{
 
 .parentHeight{
     height: inherit;
+}
+
+.flex{
+    display: flex;
 }
 
 #dashboardSidebar{
