@@ -5,20 +5,24 @@ ESERCITAZIONE PHP: LOGIN E CRUD
 Vogliamo creare un semplice portale per una biblioteca. Le entità principali del DB sono le
 seguenti: UTENTI, LIBRI.
 Pagine e funzionalità: -homepage.php: pagina di benvenuto che indirizza alle pagine di registrazione o di login-login_amministratori.php. -login_utenti.php
-(Se volete potete fare un’unica pagina di login) -signup_utenti.php: pagina di registrazione di un nuovo utente
+(Se volete potete fare un’unica pagina di login) 
+-signup_utenti.php: pagina di registrazione di un nuovo utente
 -dashboard_amministratori.php: la pagina di controllo degli admin che devono essere in grado di:  Effettuare il logout  creare ed eliminare utenti extra: abilitare/disabilitare un utente
  visualizzare i libri disponibili (lista completa, ricerca per nome, ricerca per autore, ricerca
 per categoria da select List) extra: visualizzarne la quantità disponibile
- aggiungere/rimuovere libri  modificare i dati dei libri
+ aggiungere/rimuovere libri 
+ modificare i dati dei libri
+
 dashboard_utenti.php
  Un utente deve essere in grado di:  Eseguire il log-out  cancellare il suo account  visualizzare i libri disponibili (lista completa, ricerca per nome, ricerca per autore, ricerca per categoria da select List) 
  Per un libro selezionato l’utente deve poter leggere le recensioni 
  prendere in prestito un libro
  restituire un libro, e contestualmente lasciare una recensione
-Requisiti di sicurezza:  Evitare di salvare le password in chiaro: utilizzare funzioni come crypt() o password_hash()
-per memorizzare le password.  Utilizzare i prepare statements per prevenire attacchi di tipo SQL Injection
- Sanificare l'input dell'utente per rimuovere o neutralizzare i tag e i codici JavaScript
-dannosi (Cross Site Scripting).  Extra: utilizzo di ulteriori tecniche per aumentare la sicurezza della pagina
+Requisiti di sicurezza: 
+ Evitare di salvare le password in chiaro: utilizzare funzioni come crypt() o password_hash() per memorizzare le password. 
+ Utilizzare i prepare statements per prevenire attacchi di tipo SQL Injection
+ Sanificare l'input dell'utente per rimuovere o neutralizzare i tag e i codici JavaScript dannosi (Cross Site Scripting). 
+ Extra: utilizzo di ulteriori tecniche per aumentare la sicurezza della pagina
 
 
 ESEMPIO DI DATABASE

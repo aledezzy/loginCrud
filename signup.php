@@ -2,7 +2,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="fullViewport flex flex-center">
-            <form class="loginBoard flex flex-center" action="dashboard.php" method="post" class="loginPage">
+            <form class="loginBoard flex flex-center" action="manageSignup.php" method="post" class="loginPage">
 
                 <img style="display:inline; height:64px; width:64px;" src="images/newUserIMG.svg" alt="UserIMG">
 
@@ -38,6 +38,7 @@
                 </div>
 
                 <input  class="submitButton loginBorder" type="submit"  value="Accedi"></input>
+                <input  type="hidden"  name="isNewUser" value="true">
             </form>
         </div>
 

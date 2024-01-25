@@ -1,3 +1,4 @@
+-- SQLBook: Code
 CREATE TABLE
     utenti (
         id INT AUTO_INCREMENT PRIMARY KEY,
