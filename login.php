@@ -1,6 +1,18 @@
 <?php
    
-   //password_verify($password, $hash);
+   //start the session
+session_start();
+//check if the user is already logged in, if yes then redirect him to welcome page
+if (isset($_SESSION['user'])) {
+    if ($_SESSION['role'] == "admin") {
+        header("Location: dashboardAmministratori.php");
+        die();
+    } else {
+        header("Location: dashboardUtenti.php");
+        die();
+    }
+}
+    
 ?>
 
 <!DOCTYPE html>
@@ -27,8 +39,9 @@
                 <input  class="loginButton loginBorder" type="password" name="UserPWD"></input>
                 </div>
                 <input  class="submitButton loginBorder" type="submit"  value="Accedi"></input>
-                <p class="UnregisteredButton" style="margin-left: auto;"><a href="signup.php" >Non sei un utente registrato?</a></p>
-
+                <p class="UnregisteredButton" style="margin-left: auto;">
+                    <a href="signup.php" >Non sei un utente registrato?</a>
+                </p>
             </form>
         </div>
 

@@ -1,14 +1,27 @@
 <?php
+
 /*include the class connection.php*/
 include 'includes/connection.php';
+//start the session
+session_start();
+//check if the user is already logged in, if yes then redirect him to welcome page
+if (isset($_SESSION['user'])) {
+    if ($_SESSION['role'] == "admin") {
+        header("Location: dashboardAmministratori.php");
+        die();
+    } else {
+        header("Location: dashboardUtenti.php");
+        die();
+    }
+}
+
+
 //prendere i dati dal form
 $userMail = $_POST['UserMail'];
 $userPassword = $_POST["UserPWD"];
 
 
-echo "<h1>sono PAZZO manageLogin</h1>";
 $connessione = Connection::new();
-echo "<h2>sono PAZZO manageLogin</h2>";
 $searchUserQuery = "SELECT email, password, ruolo FROM utenti WHERE email = '" . $userMail . "'";
 echo "<h1>ao</h1>";
 $result = $connessione->query($searchUserQuery);
@@ -25,6 +38,7 @@ if ($result->num_rows == 0) {
     while ($row = $result->fetch_assoc()) {
         $userRole = $row['ruolo'];
     }
+    
 }
 
 echo "<h1>ehm</h1>";
@@ -53,6 +67,8 @@ if (!(password_verify($userPassword, $criptedPassword))) {
     exit();
 } else {
     echo "Password corretta";
+    $_SESSION['user'] = $userMail; // imposta la variabile di sessione
+    $_SESSION['role'] = $userRole; // imposta la variabile di sessione
     if ($userRole == "admin") {
         echo "sei un amministratore";
         //redirect to dashboardAmministratori.php
@@ -64,6 +80,6 @@ if (!(password_verify($userPassword, $criptedPassword))) {
         exit();
     }
 }
-$connessione->close();
+//$connessione->close();
 
 ?>
