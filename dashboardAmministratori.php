@@ -1,6 +1,17 @@
 <?php
 /*include the class connection.php*/
 include 'includes/connection.php';
+//start the session
+session_start();
+if (isset($_SESSION['user'])) {
+    if ($_SESSION['role'] == "user") {
+        header("Location: dashboardUtente.php");
+        die();
+    }
+}else{
+    header("Location: login.php");
+    die();
+}
 ?>
 
 <!DOCTYPE html>
@@ -9,8 +20,8 @@ include 'includes/connection.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="styles/dashboard.css" rel="stylesheet" />
+    <title>dashboardAmministratori</title>
+    <link href="styles/dashboard.css" rel="stylesheet"/>
     <script src="script/divSelector.js"></script>
 </head>
 
