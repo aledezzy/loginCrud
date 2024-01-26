@@ -3,6 +3,8 @@
 include 'includes/connection.php';
 $connessione = Connection::new();
 
+//start the session
+session_start();
 // Get UserMail from table Utenti
 
 if (isset($_POST["isNewUser"])) {
@@ -13,36 +15,27 @@ if (isset($_POST["isNewUser"])) {
     //hash the password
     $userPassword = password_hash($userPassword, PASSWORD_DEFAULT);
 
-    //insert the post values into the database
-    $query = "INSERT INTO utenti (nome, cognome, email, password) VALUES (?, ?, ?, ?)";
-    $preparedQuery = $connessione->prepare($query);
-    $preparedQuery->bind_param("ssss", $userName, $userSurname, $userMail, $userPassword);
-    $preparedQuery->execute();
-    $preparedQuery->bind_result($userMail, $userMail, $userMail, $userPassword);
-    $preparedQuery->execute();
-    $preparedQuery->store_result();
-    
-    //show error if query is not executed
-    if ($preparedQuery->errno) {
-        echo "Query non eseguita, errore: " . $preparedQuery->error;
-    } else {
-        echo "Query eseguita con successo";
-    }
-}   
-
-$query = "SELECT email, password FROM utenti WHERE email = '" . $userMail . "'";
-$result = $connessione->query($query);
-
-if ($result->num_rows > 0 ) {
-    while ($row = $result->fetch_assoc()) {
-        $userMail = $row['email'];
-        
-    }
-    if (password_verify($userPassword, $row['password'])) {
-        echo "Password corretta";
-    } else {
-        echo "Password errata";
-    }
 }
+//insert the post values into the db utenti
+$query = "INSERT INTO utenti (nome, cognome, email, password) VALUES (?, ?, ?, ?)";
+$preparedQuery = $connessione->prepare($query);
+$preparedQuery->bind_param("ssss", $userName, $userSurname, $userMail, $userPassword);
+$preparedQuery->execute();
+/*$preparedQuery->bind_result($userMail, $userMail, $userPassword, $userPassword);
+$preparedQuery->execute();
+$preparedQuery->store_result();
+$preparedQuery->close();*/
+
+//si potrebbero inserire in un if
+$_SESSION['user'] = $userMail; // imposta la variabile di sessione
+$_SESSION['role'] = $userRole; // imposta la variabile di sessione
+?>
+<script>
+    alert("Registrazione avvenuta con successo. Effettua il login.");
+    window.location.href = "login.php";
+</script>
+<?php
+
+die();
 
 ?>
