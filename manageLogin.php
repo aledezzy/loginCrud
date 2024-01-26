@@ -1,4 +1,16 @@
 <?php
+//start the session
+session_start();
+if ($_SESSION['userRole'] == "admin") {
+    header('Location: dashboardAmministratori.php');
+    exit();
+} else if ($_SESSION['userRole'] == "admin"){
+    header("Location: dashboardUtenti.php");
+    exit();
+} else if(!isset($_SESSION['userRole'])){
+    header("Location: signup.php");
+    exit();
+}
 /*include the class connection.php*/
 include 'includes/connection.php';
 //prendere i dati dal form
@@ -22,7 +34,7 @@ if ($result->num_rows == 0) {
     die();
 }else{
     while ($row = $result->fetch_assoc()) {
-        $userRole = $row['ruolo'];
+        $_SESSION['userRole'] = $row['ruolo'];
     }
 }
 $result->free_result();
@@ -39,7 +51,7 @@ if ($result->num_rows > 0) {
 }
  */
 
-if (!(password_verify($userPassword, $criptedUserPassword))) {
+if (!(password_hash($userPassword, PASSWORD_DEFAULT)  == $criptedUserPassword)) {
     echo "Password errata";
     //redirect to login.php
     header("Location: login.php");
