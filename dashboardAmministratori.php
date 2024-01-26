@@ -20,8 +20,8 @@ if (isset($_SESSION['user'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>dashboardAmministratori</title>
-    <link href="styles/dashboard.css" rel="stylesheet"/>
+    <title>Document</title>
+    <link href="styles/dashboard.css" rel="stylesheet" />
     <script src="script/divSelector.js"></script>
 </head>
 
@@ -32,10 +32,10 @@ if (isset($_SESSION['user'])) {
         <button onclick="showDiv(3)">Button 3</button>
     </div>
 
-    <div class="itemsMargin" style="display:flex; justify-content:end;"id="dashboardHeader">
-            <div style="background-color: red; width:30%">
-                <a href="logout.php">Logout<a>
-            </div>
+    <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">
+        <div style="background-color: red; width:30%">
+            <a href="logout.php">Logout<a>
+        </div>
     </div>
 
 
