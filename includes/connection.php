@@ -1,7 +1,7 @@
 <?php
      class Connection {
-        private static $user = "root";//scuola
-        private static $pass = "";//paolino
+        private static $user = "scuola";
+        private static $pass = "paolino";
         private static $dbAddress = "localhost";
         private static $dbName = "tpsapp";
         

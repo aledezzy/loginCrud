@@ -1,6 +1,18 @@
 <?php
+    
+    include 'includes/connection.php';
     //start session and check for variable 'userRole'
     session_start();
+    //check if the user is logged in, if not then redirect him to login page. Check also if the user is an admin or a user
+    if (!isset($_SESSION['user'])) {
+        header("Location: login.php");
+        die();
+    } else {
+        if ($_SESSION['userRole'] == "admin") {
+            header("Location: dashboardAmministratori.php");
+            die();
+        }
+    }
 ?>
     <!DOCTYPE html>
     <html lang="it">
