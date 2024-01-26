@@ -1,10 +1,12 @@
 <?php
+session_start();
 
 /*include the class connection.php*/
 include 'includes/connection.php';
 //start the session
+
 session_start();
-//check if the user is already logged in, if yes then redirect him
+
 if (isset($_SESSION['user'])) {
     if ($_SESSION['role'] == "admin") {
         header("Location: dashboardAmministratori.php");
@@ -33,12 +35,11 @@ if ($result->num_rows == 0) {
 } else {
     echo "<h1>utente trovato</h1>";
     while ($row = $result->fetch_assoc()) {
-        $userRole = $row['ruolo'];
+        $_SESSION['userRole'] = $row['ruolo'];
     }
     
 }
 
-echo "<h1>ehm</h1>";
 
 //query for getting the password from the db
 $searchPasswordQuery = "SELECT password FROM utenti WHERE email = '" . $userMail . "'";
@@ -56,8 +57,8 @@ if ($result->num_rows > 0) {
         $userRole = $row['ruolo'];
     }
 }
-echo "<h1>adesso verifico la password</h1>";
-if (!(password_verify($userPassword, $criptedPassword))) {
+
+if (!(password_hash($userPassword, PASSWORD_DEFAULT)  == $criptedUserPassword)){
     echo "Password errata";
     //redirect to login.php
     header("Location: includes/ERROR.php");

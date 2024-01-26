@@ -6,7 +6,7 @@
         private static $dbName = "tpsapp";
         
         public static function new(){
-            $conn = new mysqli(self::$dbAddress, self::$user, self::$pass, self::$dbName, 3306);
+            $conn = new mysqli(self::$dbAddress, self::$user, self::$pass, self::$dbName, 3307);
             if(!$conn){
                 die();
                 include("ERROR.php");

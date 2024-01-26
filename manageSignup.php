@@ -26,16 +26,27 @@ $preparedQuery->execute();
 $preparedQuery->store_result();
 $preparedQuery->close();*/
 
+//query for getting the role of an user
+$searchRolequery = "SELECT ruolo FROM utenti WHERE email = '" . $userMail . "'";
+$result = $connessione->query($searchRolequery);
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $userRole = $row['ruolo'];
+    }
+} else {
+    echo "Error: " . $searchRolequery . "<br>" . $connessione->error;
+}
+
+
 //si potrebbero inserire in un if
 $_SESSION['user'] = $userMail; // imposta la variabile di sessione
 $_SESSION['role'] = $userRole; // imposta la variabile di sessione
 ?>
 <script>
-    alert("Registrazione avvenuta con successo");
+
+    alert("Registrazione avvenuta con successo.");
     window.location.href = "login.php";
 </script>
 <?php
-
 die();
-
 ?>

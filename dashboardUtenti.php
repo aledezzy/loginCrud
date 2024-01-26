@@ -12,6 +12,7 @@ if (isset($_SESSION['user'])) {
     header("Location: login.php");
     die();
 }
+
 ?>
     <!DOCTYPE html>
     <html lang="it">
@@ -25,6 +26,7 @@ if (isset($_SESSION['user'])) {
     </head>
 
     <body>
+
     <div class="itemsMargin" id="dashboardSidebar">
         <button onclick="showDiv(1)">Button 1</button>
         <button onclick="showDiv(2)">Button 2</button>
@@ -34,6 +36,7 @@ if (isset($_SESSION['user'])) {
     <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">
         <div style="background-color: red; width:30%">
             <a href="logout.php">Logout<a>
+
         </div>
     </div>
 

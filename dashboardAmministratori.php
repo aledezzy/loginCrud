@@ -5,7 +5,7 @@ include 'includes/connection.php';
 session_start();
 if (isset($_SESSION['user'])) {
     if ($_SESSION['role'] == "user") {
-        header("Location: dashboardUtente.php");
+        header("Location: dashboardUtenti.php");
         die();
     }
 }else{
@@ -32,10 +32,10 @@ if (isset($_SESSION['user'])) {
         <button onclick="showDiv(3)">Button 3</button>
     </div>
 
-    <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">
-        <div style="background-color: red; width:30%">
-            <a href="logout.php">Logout<a>
-        </div>
+    <div class="itemsMargin" style="display:flex; justify-content:end;"id="dashboardHeader">
+            <div style="background-color: red; width:30%">
+                <a href="logout.php">Logout<a>
+            </div>
     </div>
 
 
