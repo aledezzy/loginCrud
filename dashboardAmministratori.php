@@ -1,6 +1,12 @@
 <?php
-/*include the class connection.php*/
-include 'includes/connection.php';
+    /*include the class connection.php*/
+    //start session and check for variable 'userRole'
+    include 'includes/connection.php';
+    session_start();
+    if (isset($_SESSION['userRole'])) {
+        header('Location: dashboardAmministratori.php');
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>

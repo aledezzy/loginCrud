@@ -71,7 +71,6 @@ if ($result->num_rows > 0) {
         $userRole = $row['ruolo'];
     }
 }
- */
 
 if (!(password_verify($userPassword, $criptedUserPassword))) {
     echo "Password errata";

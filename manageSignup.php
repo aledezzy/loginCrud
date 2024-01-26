@@ -31,11 +31,9 @@ $_SESSION['user'] = $userMail; // imposta la variabile di sessione
 $_SESSION['role'] = $userRole; // imposta la variabile di sessione
 ?>
 <script>
-    alert("Registrazione avvenuta con successo. Effettua il login.");
+    alert("Registrazione avvenuta con successo.");
     window.location.href = "login.php";
 </script>
 <?php
-
 die();
-
 ?>

@@ -1,4 +1,7 @@
-
+<?php
+    //start session and check for variable 'userRole'
+    session_start();
+?>
     <!DOCTYPE html>
     <html lang="it">
 
@@ -18,8 +21,10 @@
             <button onclick="showDiv(3)">Button 3</button>
         </div>
 
-        <div class="itemsMargin" id="dashboardHeader">
-
+        <div class="itemsMargin" style="display:flex; justify-content:end;"id="dashboardHeader">
+            <div style="background-color: red; width:30%">
+                <a href="logout.php">Logout<a>
+            </div>
         </div>
 
 
