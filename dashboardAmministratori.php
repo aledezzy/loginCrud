@@ -20,64 +20,55 @@ if (isset($_SESSION['user'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Dashboard Amministratori</title>
     <link href="styles/dashboard.css" rel="stylesheet" />
     <script src="script/divSelector.js"></script>
 </head>
 
 <body>
-    <div class="itemsMargin" id="dashboardSidebar">
-        <button onclick="showDiv(1)">Button 1</button>
-        <button onclick="showDiv(2)">Button 2</button>
-        <button onclick="showDiv(3)">Button 3</button>
+    <div class="sidebarGridTemplate"
+    id="dashboardSidebar">
+        <button class="sidebarButton" onclick="showDiv(1)">Button 1</button>
+        <button class="sidebarButton" onclick="showDiv(2)">Button 2</button>
+        <button class="sidebarButton" onclick="showDiv(3)">Button 3</button>
     </div>
 
     <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">
-        <div style="background-color: red; width:30%">
-            <a href="logout.php">Logout<a>
+        <div class=" flex center">
+            <div class="flex logoutButton">
+            <img src="images/logoutLogo.svg" alt="headedrLogo">
+            <a href="logout.php">Logout</a>
+            </div>
         </div>
     </div>
 
 
 
-    <div class="itemsMargin" id="dashboardMainContent" style="height:inherit;">
-        <div id="div1" class="content-div gridTemplate parentHeight gridCenter">
-            <div class="item">
-                <h1 style="color: blue;">dddd</h1>
-            </div>
-            <div class="item">
+    <main>
+        <div class="itemsMargim" style="height:100%" id="dashboardMainContent" style="height:inherit;">
+             <div id="div0" class="defaultPanel content-div">
+                <h1>School dahboard</h1>
+                <p>by deZuani, Calizzano & Morbito<p>
+                <p style="color:#2563eb;">Seleziona un'opzione</p>
+             </div>
 
+            <div id="div1" class="content-div gridTemplate parentHeight gridCenter">
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
             </div>
-            <div class="item">
-
-            </div>
-            <div class="item">
-
-            </div>
-        </div>
 
         <div id="div2" class="content-div gridTemplate parentHeight gridCenter">
-            <div class="item">
-                <h1 style="color: blue;">gggg</h1>
-            </div>
-            <div class="item">
-
-            </div>
-            <div class="item">
-
-            </div>
-            <div class="item">
-
-            </div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
+            <div class="item"></div>
         </div>
 
         <div id="div3" class="content-div gridTemplate parentHeight gridCenter">
-            <div class="item">
-                <h1 style="color: blue;">vbvbbbbb</h1>
-            </div>
-            <div class="item">
-
-            </div>
+            <div class="item"></div>
+            <div class="item"></div>
             <div class="item">
 
             </div>
@@ -86,6 +77,11 @@ if (isset($_SESSION['user'])) {
             </div>
         </div>
     </div>
+    </div>
+
+        </div>
+    </main>
+        
 </body>
 
 </html>
