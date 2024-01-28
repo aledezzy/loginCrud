@@ -4,6 +4,7 @@
 *, *:before, *:after {
     font-family: 'Open Sans', sans-serif;
     color: black;
+    box-sizing: border-box;
 }
 
 body,html {
@@ -19,7 +20,7 @@ body{
     grid-template-areas: 
         "header header"
         "sidebar main";
-    
+    gap: 2px;
 }
 
 .itemsMargin{
@@ -48,13 +49,12 @@ body{
 }
 
 .item{
-    background-color: black;
-    height: 100px;
-    width: 100px;
-    margin: auto;
+    background-color: #e5e7eb;
+    margin: 10px;
 }
 
 .parentHeight{
+    width: inherit;
     height: inherit;
 }
 
@@ -69,7 +69,11 @@ body{
 
 .defaultPanel > *{
     color: #6b7280;
-    margin: 3px;
+    margin: 0;
+}
+
+.defaultPanelElements{
+    margin-bottom: 3px;
 }
 
 .logoutButton{
@@ -104,6 +108,7 @@ body{
 
 #div1, #div2, #div3{
     display: none;
+    margin: 0;
 }
 
 @media only screen and (max-width: 600px) {

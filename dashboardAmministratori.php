@@ -47,27 +47,27 @@ if (isset($_SESSION['user'])) {
     <main>
         <div class="itemsMargim" style="height:100%" id="dashboardMainContent" style="height:inherit;">
              <div id="div0" class="defaultPanel content-div">
-                <h1>School dahboard</h1>
-                <p>by deZuani, Calizzano & Morbito<p>
-                <p style="color:#2563eb;">Seleziona un'opzione</p>
+                <h1 class="itemsMargin" style="color:#2563eb">School dashboard</h1>
+                <p class="itemsMargin">by De zuani, Calizzano & Morabito<p>
+                <p class="itemsMargin" style="color:#2563eb;">Seleziona un'opzione</p>
              </div>
 
-            <div id="div1" class="content-div gridTemplate parentHeight gridCenter">
-            <div class="item"></div>
-            <div class="item"></div>
-            <div class="item"></div>
-            <div class="item"></div>
+            <div id="div1" class="content-div parentHeight">
+                <div class="item" style="color:#2563eb">hgf</div>
+                <div class="item"></div>
+                <div class="item"></div>
+                <div class="item"></div>
             </div>
 
-        <div id="div2" class="content-div gridTemplate parentHeight gridCenter">
-            <div class="item"></div>
+        <div id="div2" class="content-div parentHeight gridCenter">
+            <div class="item" style="color:#2563eb">hgfgfd</div>
             <div class="item"></div>
             <div class="item"></div>
             <div class="item"></div>
         </div>
 
-        <div id="div3" class="content-div gridTemplate parentHeight gridCenter">
-            <div class="item"></div>
+        <div id="div3" class="content-div  parentHeight gridCenter">
+            <div class="item" style="color:#2563eb">hgdsf</div>
             <div class="item"></div>
             <div class="item">
 
