@@ -28,9 +28,9 @@ if (isset($_SESSION['user'])) {
 <body>
     <div class="sidebarGridTemplate"
     id="dashboardSidebar">
-        <button class="sidebarButton" onclick="showDiv(1)">Button 1</button>
-        <button class="sidebarButton" onclick="showDiv(2)">Button 2</button>
-        <button class="sidebarButton" onclick="showDiv(3)">Button 3</button>
+        <button class="sidebarButton" onclick="showDiv(1)">Gestione Utenti</button>
+        <button class="sidebarButton" onclick="showDiv(2)">Libreria</button>
+        <button class="sidebarButton" onclick="showDiv(3)">Gestione Libri</button>
     </div>
 
     <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">
@@ -54,7 +54,35 @@ if (isset($_SESSION['user'])) {
 
             <div id="div1" class="content-div parentHeight">
                 <div class="item" style="color:#2563eb">hgf</div>
-                <div class="item"></div>
+                <div class="item ">
+                    <h1>Lista Utenti</h1>
+                    <table class="userTable">
+                        <th>Nome</th>
+                        <th>Cognome</th>
+                        <th>E-mail</th>
+                        <th>Ruolo</th>
+                        <th>Data Registrazione</th>
+                        <th>Elimina</th>
+                        <th>Disabilita</th>
+                    <?php
+                        $connessione = Connection::new();
+                        $getUsersquery="SELECT nome, cognome, email, ruolo, data_registrazione FROM utenti";
+                        $result = $connessione -> query($getUsersquery);
+                        while($row = $result->fetch_assoc()){
+                           echo "<tr>";
+                           echo "<td>".$row['nome']."</td>";
+                           echo "<td>".$row['cognome']."</td>";
+                           echo "<td>".$row['email']."</td>";
+                           echo "<td>".$row['ruolo']."</td>";
+                           echo "<td>".$row['data_registrazione']."</td>";
+                           echo "<td><button>Elimina</button></td>";
+                           echo "<td><button>Disabilita</button></td>";
+                           echo "</tr>";
+                        }
+                    
+                    ?>
+                    </table>
+                </div>
                 <div class="item"></div>
                 <div class="item"></div>
             </div>

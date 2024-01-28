@@ -4,7 +4,6 @@
 *, *:before, *:after {
     font-family: 'Open Sans', sans-serif;
     color: black;
-    box-sizing: border-box;
 }
 
 body,html {
@@ -18,9 +17,14 @@ body{
     grid-template-columns: 200px 1fr;
     grid-template-rows: 60px 1fr;
     grid-template-areas: 
-        "header header"
+    "header header"
         "sidebar main";
     gap: 2px;
+}
+
+button{
+    width: inherit;
+    margin: 0;    
 }
 
 .itemsMargin{
@@ -28,19 +32,25 @@ body{
 }
 
 .sidebarGridTemplate{
+    padding-top: 3em;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(9, 50px);
-
+    grid-template-rows: repeat(9, 75px);
 }
 
-.sidebarGridTemplate > button{
-    padding: 10px;
-    margin: 10px 1em;
-}
 
 .sidebarButton{
+    font-size: 18px;
+    width: 100%;
+    height: 50px;
+    background-color: #d1d5db;
+    border: none;
     line-height: 0px;
+
+}
+
+.sidebarButton:hover{
+    background-color: #9ca3af;
 }
 
 .gridTemplate{
@@ -51,6 +61,11 @@ body{
 .item{
     background-color: #e5e7eb;
     margin: 10px;
+}
+
+.userTable{
+    width: 100px;
+    overflow-y: scroll;
 }
 
 .parentHeight{
