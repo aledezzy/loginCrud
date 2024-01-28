@@ -80,6 +80,3 @@ if (!(password_verify($userPassword, $criptedPassword))) {
         exit();
     }
 }
-//$connessione->close();
-
-?>

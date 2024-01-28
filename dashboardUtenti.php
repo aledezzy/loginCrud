@@ -47,8 +47,8 @@ if (isset($_SESSION['user'])) {
     <main>
         <div class="itemsMargim" style="height:100%" id="dashboardMainContent" style="height:inherit;">
              <div id="div0" class="defaultPanel content-div">
-                <h1>School dahboard</h1>
-                <p>by deZuani, Calizzano & Morbito<p>
+                <h1>School dashboard</h1>
+                <p>by De Zuani, Calizzano & Morabito<p>
                 <p style="color:#2563eb;">Seleziona un'opzione</p>
              </div>
 
@@ -83,5 +83,4 @@ if (isset($_SESSION['user'])) {
     </main>
         
 </body>
-
 </html>

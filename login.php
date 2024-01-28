@@ -12,7 +12,6 @@ if (isset($_SESSION['user'])) {
         die();
     }
 }
-    
 ?>
 
 <!DOCTYPE html>
