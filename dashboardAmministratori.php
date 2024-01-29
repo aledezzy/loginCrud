@@ -3,6 +3,8 @@
 include 'includes/connection.php';
 //start the session
 session_start();
+$connessione = Connection::new();
+
 if (isset($_SESSION['user'])) {
     if ($_SESSION['role'] == "user") {
         header("Location: dashboardUtenti.php");
@@ -11,6 +13,13 @@ if (isset($_SESSION['user'])) {
 }else{
     header("Location: login.php");
     die();
+}
+
+if(isset($_POST['deleteUserButton'])){
+    $connessione -> query("DELETE FROM utenti WHERE email='".$_POST['deleteUserButton']."'");
+}
+if(isset($_POST['deleteBookButton'])){
+    $connessione -> query("DELETE FROM libri WHERE isbn='".$_POST['deleteBookButton']."'");
 }
 ?>
 
@@ -53,11 +62,10 @@ if (isset($_SESSION['user'])) {
              </div>
 
             <div id="div1" class="content-div parentHeight">
-                <div class="item" style="color:#2563eb">hgf</div>
                 <div class="item ">
                     <h1>Lista Utenti</h1>
                     <table class="userTable">
-                        <caption></caption>
+
                         <th>Nome</th>
                         <th>Cognome</th>
                         <th>E-mail</th>
@@ -66,33 +74,65 @@ if (isset($_SESSION['user'])) {
                         <th>Elimina</th>
                         <th>Disabilita</th>
                     <?php
-                        $connessione = Connection::new();
                         $getUsersquery="SELECT nome, cognome, email, ruolo, data_registrazione FROM utenti";
                         $result = $connessione -> query($getUsersquery);
                         while($row = $result->fetch_assoc()){
-                           echo "<tr>";
-                           echo "<td>".$row['nome']."</td>";
-                           echo "<td>".$row['cognome']."</td>";
-                           echo "<td>".$row['email']."</td>";
-                           echo "<td>".$row['ruolo']."</td>";
-                           echo "<td>".$row['data_registrazione']."</td>";
-                           echo "<td><button>Elimina</button></td>";
-                           echo "<td><button>Disabilita</button></td>";
-                           echo "</tr>";
+                           if($row['ruolo'] != 'admin'){
+                            echo "<tr>";
+                            echo "<td>".$row['nome']."</td>";
+                            echo "<td>".$row['cognome']."</td>";
+                            echo "<td>".$row['email']."</td>";
+                            echo "<td>".$row['ruolo']."</td>";
+                            echo "<td>".$row['data_registrazione']."</td>";
+                        
+                    ?>
+                            <form method="post">
+                            <td><button type='submit' name='deleteUserButton' value="<?php echo $row['email'];?>">Elimina</button></td>
+                            <td><button type='submit' name='disableUserButton' value="<?php echo $row['email'];?>">Disabilita</button></td>
+                            </form>
+                           </tr>
+                    <?php
+                            }
                         }
-                    
+                        $result -> free_result();
                     ?>
                     </table>
                 </div>
-                <div class="item"></div>
-                <div class="item"></div>
             </div>
 
         <div id="div2" class="content-div parentHeight gridCenter">
-            <div class="item" style="color:#2563eb">hgfgfd</div>
-            <div class="item"></div>
-            <div class="item"></div>
-            <div class="item"></div>
+            <div class="item">
+            <table>
+                        <th>Isbn</th>
+                        <th>Titolo</th>
+                        <th>Autore</th>
+                        <th>Anno di Pubblicazione</th>
+                        <th>Genere</th>
+                        <th>Quantita rimasta</th>
+                        <th>Elimina</th>
+                        <th>Disabilita</th>
+            <?php
+                $getBooksquery="SELECT isbn, titolo, autore, anno_pubblicazione, genere, quantita FROM libri";
+                $result = $connessione -> query($getBooksquery);
+                while($row = $result->fetch_assoc()){
+                    echo "<tr>";
+                    echo "<td>".$row['isbn']."</td>";
+                    echo "<td>".$row['titolo']."</td>";
+                    echo "<td>".$row['autore']."</td>";
+                    echo "<td>".$row['anno_pubblicazione']."</td>";
+                    echo "<td>".$row['genere']."</td>";
+                    echo "<td>".$row['quantita']."</td>";
+            ?>
+                    <form method="post">
+                        <td><button type='submit' name='deleteBookButton' value="<?php echo $row['isbn']?>">Elimina</button></td>
+                        <td><button type='submit' name='disableBookButton' value="<?php echo $row['isbn'] ?>">Disabilita</button></td>
+                    </form>
+                    </tr>
+            <?php
+                }
+            ?>
+            </table>
+            </div>
         </div>
 
         <div id="div3" class="content-div  parentHeight gridCenter">
