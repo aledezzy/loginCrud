@@ -9,8 +9,11 @@
 
     include_once 'connection.php';
     $connection = Connection::new();
-    $genreQuery = "SELECT DISTINCT generi FROM libri";
+    $genreQuery = "SELECT DISTINCT genere FROM libri";
+    $result = $connection -> query($genreQuery);
     while ($row = $result->fetch_assoc()) {
-        echo "<option value=".$row["generi"]."></option>";
+        echo "<option value=".$row['genere'].">".$row['genere']."</option>";
     }
+    $connection->close();
+    
 ?>

@@ -18,22 +18,28 @@ if (isset($_SESSION['user'])) {
 if(isset($_POST['deleteUserButton'])){
     $connessione -> query("DELETE FROM utenti WHERE email='".$_POST['deleteUserButton']."'");
 }
-if(isset($_POST['deleteBookButton'])){
-    $connessione -> query("DELETE FROM libri WHERE isbn='".$_POST['deleteBookButton']."'");
-}
 if(isset($_POST['addUser'])){
     $query = "INSERT INTO utenti (nome, cognome, email, password) VALUES (?, ?, ?, ?)";
     $preparedQuery = $connessione->prepare($query);
     $preparedQuery->bind_param("ssss", $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['password']);
     $preparedQuery->execute();
+
 }
-if(isset($_POST['AddBook'])){
-    $query = "INSERT INTO utenti (nome, cognome, email, password) VALUES (?, ?, ?, ?)";
+if(isset($_POST['deleteBookButton'])){
+    $connessione -> query("DELETE FROM libri WHERE isbn='".$_POST['deleteBookButton']."'");
+}
+if(isset($_POST['addBookButton'])){
+    $query = "INSERT INTO libri (titolo, autore, isbn, anno_pubblicazione, genere, quantita, descrizione)
+              VALUES (?, ?, ?, ?, ?, ?, ?)";
     $preparedQuery = $connessione->prepare($query);
-    $preparedQuery->bind_param("ssss", $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['password']);
+    $preparedQuery->bind_param("sssssis", $_POST['titolo'], $_POST['autore'], 
+                                          $_POST['isbn'], $_POST['anno_pubblicazione'],
+                                          $_POST['genere'], $_POST['quantita'],
+                                          $_POST['descrizione'], 
+                                        );
     $preparedQuery->execute();
 }
-if(isset($_POST['searchBook'])){
+if(isset($_POST['searchBookButton'])){
     $query = "INSERT INTO utenti (nome, cognome, email, password) VALUES (?, ?, ?, ?)";
     $preparedQuery = $connessione->prepare($query);
     $preparedQuery->bind_param("ssss", $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['password']);
@@ -142,30 +148,34 @@ if(isset($_POST['searchBook'])){
             <div class="item">
             <table class="userTable">
                             <caption><strong>Ricerca libro</strong></caption>
-                            <th>Nome</th>
-                            <th>Cognome</th>
-                            <th>E-mail</th>
-                            <th>Password</th>
+                            <th>Titolo</th>
+                            <th>Nome Autore</th>
+                            <th>Categoria</th>
                             <th></th>
                         <form method="post">
                             <tr>
-                            <td><input class="userAddButton" type="text" name="nome"></td>
-                            <td><input class="userAddButton" type="text" name="cognome"></td>
-                            <td><input class="userAddButton" type="text" name="email"></td>
-                            <td><input class="userAddButton" type="text" name="password"></td>
-                            <td><button type='submit' name='addUser'>Aggiungi</button></td>
+                            <td><input class="userAddButton" type="text" name="titolo"></td>
+                            <td><input class="userAddButton" type="text" name="autore"></td>
+                            <td>
+                            <select id="cars">
+                                <?php 
+                                    include 'includes/generi.php';
+                                ?>
+                            </select>
+                            </td>
+                            <td><button type='submit' name='searchBookButton'>Aggiungi</button></td>
                             </tr>
                         </form>
             </table>
-            <table>
+            
+            <table class="userTable">
                         <th>Isbn</th>
                         <th>Titolo</th>
                         <th>Autore</th>
                         <th>Anno di Pubblicazione</th>
                         <th>Genere</th>
                         <th>Quantita rimasta</th>
-                        <th>Elimina</th>
-                        <th>Disabilita</th>
+                        <th></th>
             <?php
                 $getBooksquery="SELECT isbn, titolo, autore, anno_pubblicazione, genere, quantita FROM libri";
                 $result = $connessione -> query($getBooksquery);
@@ -180,12 +190,34 @@ if(isset($_POST['searchBook'])){
             ?>
                     <form method="post">
                         <td><button type='submit' name='deleteBookButton' value="<?php echo $row['isbn']?>">Elimina</button></td>
-                        <td><button type='submit' name='disableBookButton' value="<?php echo $row['isbn'] ?>">Disabilita</button></td>
                     </form>
                     </tr>
             <?php
                 }
             ?>
+            </table>
+            <table class="userTable">
+                            <caption><strong>aggiungi libro</strong></caption>
+                            <th>Isbn</th>
+                            <th>Titolo</th>
+                            <th>Autore</th>
+                            <th>Anno Publicazione</th>
+                            <th>Genere</th>
+                            <th>Quantita</th>
+                            <th>Descrizione</th>
+                            <th></th>
+                        <form method="post">
+                            <tr>
+                            <td><input class="userAddButton" type="text" name="isbn"></td>
+                            <td><input class="userAddButton" type="text" name="titolo"></td>
+                            <td><input class="userAddButton" type="text" name="autore"></td>
+                            <td><input class="userAddButton" type="text" name="anno_pubblicazione"></td>
+                            <td><input class="userAddButton" type="text" name="genere"></td>
+                            <td><input class="userAddButton" type="text" name="quantita"></td>
+                            <td><input class="userAddButton" type="text" name="descrizione"></td>
+                            <td><button type='submit' name='addBookButton'>Aggiungi</button></td>
+                            </tr>
+                        </form>
             </table>
             </div>
         </div>
