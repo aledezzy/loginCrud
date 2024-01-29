@@ -27,6 +27,17 @@ button{
     margin: 0;    
 }
 
+td, th {
+    border-bottom: 1px solid black;
+    padding: 0.5rem;
+    text-align: center;
+}
+ 
+table {
+    margin: 0px 10px;
+    border-collapse: collapse;
+}
+
 .itemsMargin{
     margin: 2px;
 }
@@ -64,7 +75,7 @@ button{
 }
 
 .userTable{
-    width: 100px;
+    width: 100%;
     overflow-y: scroll;
 }
 
@@ -103,6 +114,13 @@ button{
     padding:0.5em; 
     text-decoration:none;
     border-radius: 10px;
+}
+
+.userAddButton{
+    border: 1px solid black;
+    height: 2em;
+    border: 0;
+    padding: 0 2em;
 }
 
 #dashboardSidebar{

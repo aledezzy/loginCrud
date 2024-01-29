@@ -21,6 +21,24 @@ if(isset($_POST['deleteUserButton'])){
 if(isset($_POST['deleteBookButton'])){
     $connessione -> query("DELETE FROM libri WHERE isbn='".$_POST['deleteBookButton']."'");
 }
+if(isset($_POST['addUser'])){
+    $query = "INSERT INTO utenti (nome, cognome, email, password) VALUES (?, ?, ?, ?)";
+    $preparedQuery = $connessione->prepare($query);
+    $preparedQuery->bind_param("ssss", $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['password']);
+    $preparedQuery->execute();
+}
+if(isset($_POST['AddBook'])){
+    $query = "INSERT INTO utenti (nome, cognome, email, password) VALUES (?, ?, ?, ?)";
+    $preparedQuery = $connessione->prepare($query);
+    $preparedQuery->bind_param("ssss", $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['password']);
+    $preparedQuery->execute();
+}
+if(isset($_POST['searchBook'])){
+    $query = "INSERT INTO utenti (nome, cognome, email, password) VALUES (?, ?, ?, ?)";
+    $preparedQuery = $connessione->prepare($query);
+    $preparedQuery->bind_param("ssss", $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['password']);
+    $preparedQuery->execute();
+}
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +80,25 @@ if(isset($_POST['deleteBookButton'])){
              </div>
 
             <div id="div1" class="content-div parentHeight">
-                <div class="item ">
+                <div class="item">
+                <table class="userTable">
+                            <caption><strong>Aggiungi utente</strong></caption>
+                            <th>Nome</th>
+                            <th>Cognome</th>
+                            <th>E-mail</th>
+                            <th>Password</th>
+                            <th></th>
+                        <form method="post">
+                            <tr>
+                            <td><input class="userAddButton" type="text" name="nome"></td>
+                            <td><input class="userAddButton" type="text" name="cognome"></td>
+                            <td><input class="userAddButton" type="text" name="email"></td>
+                            <td><input class="userAddButton" type="text" name="password"></td>
+                            <td><button type='submit' name='addUser'>Aggiungi</button></td>
+                            </tr>
+                        </form>
+                    </table>
+                        
                     <h1>Lista Utenti</h1>
                     <table class="userTable">
 
@@ -78,30 +114,49 @@ if(isset($_POST['deleteBookButton'])){
                         $result = $connessione -> query($getUsersquery);
                         while($row = $result->fetch_assoc()){
                            if($row['ruolo'] != 'admin'){
-                            echo "<tr>";
-                            echo "<td>".$row['nome']."</td>";
-                            echo "<td>".$row['cognome']."</td>";
-                            echo "<td>".$row['email']."</td>";
-                            echo "<td>".$row['ruolo']."</td>";
-                            echo "<td>".$row['data_registrazione']."</td>";
-                        
                     ?>
+                            <tr>
+                            <td class="boh"><?php echo $row['nome']?></td>
+                            <td><?php echo $row['cognome']?></td>
+                            <td><?php echo $row['email']?></td>
+                            <td><?php echo $row['ruolo']?></td>
+                            <td><?php echo $row['data_registrazione']?></td>
                             <form method="post">
                             <td><button type='submit' name='deleteUserButton' value="<?php echo $row['email'];?>">Elimina</button></td>
                             <td><button type='submit' name='disableUserButton' value="<?php echo $row['email'];?>">Disabilita</button></td>
                             </form>
                            </tr>
-                    <?php
+                           <?php
                             }
                         }
                         $result -> free_result();
-                    ?>
-                    </table>
+                        
+                        ?>
+                        </table>
+                        
+
                 </div>
             </div>
 
         <div id="div2" class="content-div parentHeight gridCenter">
             <div class="item">
+            <table class="userTable">
+                            <caption><strong>Ricerca libro</strong></caption>
+                            <th>Nome</th>
+                            <th>Cognome</th>
+                            <th>E-mail</th>
+                            <th>Password</th>
+                            <th></th>
+                        <form method="post">
+                            <tr>
+                            <td><input class="userAddButton" type="text" name="nome"></td>
+                            <td><input class="userAddButton" type="text" name="cognome"></td>
+                            <td><input class="userAddButton" type="text" name="email"></td>
+                            <td><input class="userAddButton" type="text" name="password"></td>
+                            <td><button type='submit' name='addUser'>Aggiungi</button></td>
+                            </tr>
+                        </form>
+            </table>
             <table>
                         <th>Isbn</th>
                         <th>Titolo</th>
