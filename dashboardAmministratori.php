@@ -3,6 +3,8 @@
 include 'includes/connection.php';
 //start the session
 session_start();
+$connessione = Connection::new();
+
 if (isset($_SESSION['user'])) {
     if ($_SESSION['role'] == "user") {
         header("Location: dashboardUtenti.php");
@@ -11,6 +13,10 @@ if (isset($_SESSION['user'])) {
 }else{
     header("Location: login.php");
     die();
+}
+
+if(isset($_POST['deleteButton'])){
+    $connessione -> query("DELETE FROM utenti WHERE email='".$_POST['deleteButton']."'");
 }
 ?>
 
@@ -53,7 +59,6 @@ if (isset($_SESSION['user'])) {
              </div>
 
             <div id="div1" class="content-div parentHeight">
-                <div class="item" style="color:#2563eb">hgf</div>
                 <div class="item ">
                     <h1>Lista Utenti</h1>
                     <table class="userTable">
@@ -66,26 +71,29 @@ if (isset($_SESSION['user'])) {
                         <th>Elimina</th>
                         <th>Disabilita</th>
                     <?php
-                        $connessione = Connection::new();
                         $getUsersquery="SELECT nome, cognome, email, ruolo, data_registrazione FROM utenti";
                         $result = $connessione -> query($getUsersquery);
                         while($row = $result->fetch_assoc()){
-                           echo "<tr>";
-                           echo "<td>".$row['nome']."</td>";
-                           echo "<td>".$row['cognome']."</td>";
-                           echo "<td>".$row['email']."</td>";
-                           echo "<td>".$row['ruolo']."</td>";
-                           echo "<td>".$row['data_registrazione']."</td>";
-                           echo "<td><button>Elimina</button></td>";
-                           echo "<td><button>Disabilita</button></td>";
-                           echo "</tr>";
+                           if($row['ruolo'] != 'admin'){
+                            echo "<tr>";
+                            echo "<td>".$row['nome']."</td>";
+                            echo "<td>".$row['cognome']."</td>";
+                            echo "<td>".$row['email']."</td>";
+                            echo "<td>".$row['ruolo']."</td>";
+                            echo "<td>".$row['data_registrazione']."</td>";
+                        
+                    ?>
+                            <form method="post">
+                            <td><button type='submit' name='deleteButton' value="<?php echo $row['email'];?>">Elimina</button></td>
+                            <td><button type='submit' name='disableButton' value="<?php echo $row['email'];?>">Disabilita</button></td>
+                            </form>
+                           </tr>
+                    <?php
+                            }
                         }
-                    
                     ?>
                     </table>
                 </div>
-                <div class="item"></div>
-                <div class="item"></div>
             </div>
 
         <div id="div2" class="content-div parentHeight gridCenter">
