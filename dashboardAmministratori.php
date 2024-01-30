@@ -25,6 +25,9 @@ if(isset($_POST['addUser'])){
     $preparedQuery->execute();
 
 }
+
+
+
 if(isset($_POST['deleteBookButton'])){
     $connessione -> query("DELETE FROM libri WHERE isbn='".$_POST['deleteBookButton']."'");
 }
@@ -157,7 +160,7 @@ if(isset($_POST['searchBookButton'])){
                             <td><input class="userAddButton" type="text" name="titolo"></td>
                             <td><input class="userAddButton" type="text" name="autore"></td>
                             <td>
-                            <select id="cars">
+                            <select name="categoria">
                                 <?php 
                                     include 'includes/generi.php';
                                 ?>
@@ -167,6 +170,36 @@ if(isset($_POST['searchBookButton'])){
                             </tr>
                         </form>
             </table>
+            <table>
+            <?php
+                        if(isset($_POST['searchBookButton'])){
+                        
+                            $query = $connessione->prepare("SELECT titolo, autore, isbn, 
+                                                                   anno_pubblicazione, genere, 
+                                                                   quantita, descrizione 
+                                                            FROM  libri 
+                                                            WHERE titolo=? 
+                                                            OR    autore=? 
+                                                            OR    genere=?"
+                                                           );
+
+                                $query->bind_param("sss", $_POST['titolo'], $_POST['autore'], $_POST['categoria']);
+                                $query->execute();
+                                $result = $query->get_result();
+
+                            
+                            while($row = $result->fetch_array()){
+                                echo "<tr>";
+                                echo "<td>".$row['isbn']."</td>";
+                                echo "<td>".$row['titolo']."</td>";
+                                echo "<td>".$row['autore']."</td>";
+                                echo "<td>".$row['anno_pubblicazione']."</td>";
+                                echo "<td>".$row['genere']."</td>";
+                                echo "<td>".$row['quantita']."</td>";
+                            }
+                            echo "</table";
+                        } else{
+                        ?>
             
             <table class="userTable">
                         <th>Isbn</th>
@@ -194,6 +227,7 @@ if(isset($_POST['searchBookButton'])){
                     </tr>
             <?php
                 }
+            }
             ?>
             </table>
             <table class="userTable">
