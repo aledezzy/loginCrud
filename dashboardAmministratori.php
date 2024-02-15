@@ -23,7 +23,6 @@ if(isset($_POST['addUser'])){
     $preparedQuery = $connessione->prepare($query);
     $preparedQuery->bind_param("ssss", $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['password']);
     $preparedQuery->execute();
-
 }
 
 
@@ -31,6 +30,7 @@ if(isset($_POST['addUser'])){
 if(isset($_POST['deleteBookButton'])){
     $connessione -> query("DELETE FROM libri WHERE isbn='".$_POST['deleteBookButton']."'");
 }
+
 if(isset($_POST['addBookButton'])){
     $query = "INSERT INTO libri (titolo, autore, isbn, anno_pubblicazione, genere, quantita, descrizione)
               VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -38,7 +38,7 @@ if(isset($_POST['addBookButton'])){
     $preparedQuery->bind_param("sssssis", $_POST['titolo'], $_POST['autore'], 
                                           $_POST['isbn'], $_POST['anno_pubblicazione'],
                                           $_POST['genere'], $_POST['quantita'],
-                                          $_POST['descrizione'], 
+                                          $_POST['descrizione']
                                         );
     $preparedQuery->execute();
                                     }
@@ -155,6 +155,7 @@ if(isset($_POST['addBookButton'])){
                             <td><input class="userAddButton" type="text" name="autore"></td>
                             <td>
                             <select name="generi">
+                                <option value="*"> -- Selezione una opzione --</option>
                                 <?php 
                                     include 'includes/generi.php';
                                 ?>
@@ -164,41 +165,83 @@ if(isset($_POST['addBookButton'])){
                             </tr>
                         </form>
             </table>
-            <table>
+            <table class="userTable">
             <?php
-                        if(isset($_POST['searchBookButton'])){
-                            $query = $connessione->prepare("SELECT *
-                                                            FROM  libri
-                                                            WHERE 1=1"
-                                                           );
-                            if(isset($_POST['titolo'])){
-                                $query.="AND ? LIKE titolo";
-                                $query->bind_param("s", $_POST['titolo']);
+                        /*if(isset($_POST['searchBookButton'])){
+                            $queryStr = "SELECT * FROM  libri WHERE 1=1";
+                            
+                            if(!$_POST['titolo']==""){
+                                echo "ho il titolo<br>";
+                                $queryStr.=" AND ? LIKE titolo";
+                               
                             }
-                            if(isset($_POST['autore'])){
-                                $query.="AND ? LIKE autore";
-                                $query->bind_param("s", $_POST['autore']);
-                            }
-                            if(isset($_POST['generi'])){
-                                $query.="AND ? LIKE genere";
-                                $query->bind_param("s", $_POST['genere']);
-                            }
+                            if(!$_POST['autore']==""){
+                                echo "ho il autore<br>";
+                                $queryStr.=" AND ? LIKE autore";
                                 
-                                $query->execute();
-                                $result = $query->get_result();
+                            }
+                            if(!$_POST['generi']==""){
+                                echo "ho il genere<br>";
+                                $queryStr.=" AND ? LIKE genere";
+                               
+                            }
 
                             
-                            while($row = $result->fetch_array()){
-                                echo "<tr>";
-                                echo "<td>".$row['isbn']."</td>";
-                                echo "<td>".$row['titolo']."</td>";
-                                echo "<td>".$row['autore']."</td>";
-                                echo "<td>".$row['anno_pubblicazione']."</td>";
-                                echo "<td>".$row['genere']."</td>";
-                                echo "<td>".$row['quantita']."</td>";
-                            }
-                            echo "</table";
-                        } else{
+                                $query = $connessione -> prepare($queryStr);*/
+
+                                if(!empty($_POST['titolo']) || !empty($_POST['autore']) || !empty($_POST['generi'])){
+                                    $queryStr = "SELECT * FROM libri WHERE 1=1";
+                                    $params = array();
+
+                                    if(!empty($_POST['titolo'])){
+                                        
+                                        $queryStr .= " AND titolo LIKE ?";
+                                        $params[] = $_POST['titolo'];
+                                    }
+                                    if(!empty($_POST['autore'])){
+                                        
+                                        $queryStr .= " AND autore LIKE ?";
+                                        $params[] = $_POST['autore'];
+                                    }
+                                    if(!empty($_POST['generi']) && $_POST['generi'] != "*"){
+                                       
+                                        $queryStr .= " AND genere LIKE ?";
+                                        $params[] = $_POST['generi'];
+                                    }
+
+                                    $query = $connessione->prepare($queryStr);
+
+                                    switch(count($params)){
+                                        case 1:
+                                            $query->bind_param("s", $params[0]);
+                                            break;
+                                        case 2:
+                                            $query->bind_param("ss", $params[0], $params[1]);
+                                            break;
+                                        case 3:
+                                            $query->bind_param("sss", $params[0], $params[1], $params[2]);
+                                            break;
+                                        // Add more cases if needed
+                                    }
+
+                                    $query->execute();
+                                    $result = $query->get_result();
+
+                                    while($row = $result->fetch_array()){
+                                      
+                                        echo "<tr>";
+                                        echo "<td>".$row['isbn']."</td>";
+                                        echo "<td>".$row['titolo']."</td>";
+                                        echo "<td>".$row['autore']."</td>";
+                                        echo "<td>".$row['anno_pubblicazione']."</td>";
+                                        echo "<td>".$row['genere']."</td>";
+                                        echo "<td>".$row['quantita']."</td>";
+                                    }
+                                    echo "</table>";
+                                } else {
+                                    // Rest of the code
+                                
+                        
                         ?>
             
             <table class="userTable">
