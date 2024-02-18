@@ -15,13 +15,27 @@ if (isset($_SESSION['user'])) {
     }
 }
 
+$connessione = Connection::new();
+
 
 //prendere i dati dal form
 $userMail = $_POST['UserMail'];
 $userPassword = $_POST["UserPWD"];
 
+$isDisableQuery = "SELECT stato FROM utentidisabilitati WHERE email = '".$userMail."'";
+$result = $connessione->query($isDisableQuery);
+if ($result->num_rows == 1) {
+    echo "Utente disabilitato";
+?>
+    <script>
+        alert("UTENTE DISABILITATO, RIVOLGITI AL SUPREMO AMMINISTRATORE");
+    </script>
+    
+<?php
+    die();
+}
+$result->free_result();
 
-$connessione = Connection::new();
 $searchUserQuery = "SELECT email, password, ruolo FROM utenti WHERE email = '" . $userMail . "'";
 echo "<h1>ao</h1>";
 $result = $connessione->query($searchUserQuery);
@@ -80,3 +94,5 @@ if (!(password_verify($userPassword, $criptedPassword))) {
         exit();
     }
 }
+
+?>

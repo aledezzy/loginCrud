@@ -19,9 +19,10 @@ if(isset($_POST['deleteUserButton'])){
     $connessione -> query("DELETE FROM utenti WHERE email='".$_POST['deleteUserButton']."'");
 }
 if(isset($_POST['addUser'])){
+    $criptedPassword = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $query = "INSERT INTO utenti (nome, cognome, email, password) VALUES (?, ?, ?, ?)";
     $preparedQuery = $connessione->prepare($query);
-    $preparedQuery->bind_param("ssss", $_POST['nome'], $_POST['cognome'], $_POST['email'], $_POST['password']);
+    $preparedQuery->bind_param("ssss", $_POST['nome'], $_POST['cognome'], $_POST['email'], $criptedPassword);
     $preparedQuery->execute();
 }
 
@@ -41,7 +42,17 @@ if(isset($_POST['addBookButton'])){
                                           $_POST['descrizione']
                                         );
     $preparedQuery->execute();
-                                    }
+}
+
+if(isset($_POST['disableUserButton'])){
+    $query = "INSERT INTO utentidisabilitati
+              VALUES (?, ?)";
+    $preparedQuery = $connessione->prepare($query);
+    $state = 'si';
+    $preparedQuery->bind_param("ss", $_POST['disableUserButton'], $state);
+    $preparedQuery->execute();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -167,6 +178,7 @@ if(isset($_POST['addBookButton'])){
             </table>
             <table class="userTable">
             <?php
+                          if(isset($_POST['searchBookButton'])){
                         /*if(isset($_POST['searchBookButton'])){
                             $queryStr = "SELECT * FROM  libri WHERE 1=1";
                             
@@ -238,7 +250,8 @@ if(isset($_POST['addBookButton'])){
                                         echo "<td>".$row['quantita']."</td>";
                                     }
                                     echo "</table>";
-                                } else {
+                                } 
+                            }else {
                                     // Rest of the code
                                 
                         
@@ -300,14 +313,7 @@ if(isset($_POST['addBookButton'])){
         </div>
 
         <div id="div3" class="content-div  parentHeight gridCenter">
-            <div class="item" style="color:#2563eb">hgdsf</div>
-            <div class="item"></div>
-            <div class="item">
-
-            </div>
-            <div class="item">
-
-            </div>
+            <div class="item" style="color:#2563eb"></div>
         </div>
     </div>
     </div>
