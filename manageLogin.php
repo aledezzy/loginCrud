@@ -26,10 +26,9 @@ $isDisableQuery = "SELECT stato FROM utentidisabilitati WHERE email = '".$userMa
 $result = $connessione->query($isDisableQuery);
 if ($result->num_rows == 1) {
     echo "Utente disabilitato";
+    header("Location: ./includes/DISABLED.html");
 ?>
-    <script>
-        alert("UTENTE DISABILITATO, RIVOLGITI AL SUPREMO AMMINISTRATORE");
-    </script>
+    
     
 <?php
     die();

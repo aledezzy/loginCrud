@@ -85,15 +85,6 @@ table {
     height: inherit;
 }
 
-.flex{
-    display: flex;
-}
-
-.center{
-    align-items: center;
-    justify-content:center;
-}
-
 .defaultPanel > *{
     color: #6b7280;
     margin: 0;
