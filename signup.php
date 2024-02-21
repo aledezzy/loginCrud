@@ -37,7 +37,7 @@
                     <input  class="loginButton loginBorder" type="password" name="UserPWD"></input>
                 </div>
 
-                <input  class="submitButton loginBorder" type="submit"  value="Accedi"></input>
+                <input  class="submitButton loginBorder" type="submit"  value="Registrati"></input>
                 <input  type="hidden"  name="isNewUser" value="true">
             </form>
         </div>

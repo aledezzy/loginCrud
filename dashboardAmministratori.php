@@ -53,6 +53,15 @@ if(isset($_POST['disableUserButton'])){
     $preparedQuery->execute();
 }
 
+if(isset($_POST['enableUserButton'])){
+    $query = "DELETE FROM utentidisabilitati
+              WHERE email = ?";
+    $preparedQuery = $connessione->prepare($query);
+    $preparedQuery->bind_param("s", $_POST['enableUserButton']);
+    $preparedQuery->execute();
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -122,9 +131,12 @@ if(isset($_POST['disableUserButton'])){
                         <th>Ruolo</th>
                         <th>Data Registrazione</th>
                         <th>Elimina</th>
-                        <th>Disabilita</th>
+                        <th>Abilita/Disabilita</th>
+                        
                     <?php
-                        $getUsersquery="SELECT nome, cognome, email, ruolo, data_registrazione FROM utenti";
+                            $getUsersquery = "SELECT nome, cognome, utenti.email, ruolo, data_registrazione, stato 
+                                            FROM utenti
+                                            LEFT JOIN utentidisabilitati ON utenti.email = utentidisabilitati.email";
                         $result = $connessione -> query($getUsersquery);
                         while($row = $result->fetch_assoc()){
                            if($row['ruolo'] != 'admin'){
@@ -137,7 +149,18 @@ if(isset($_POST['disableUserButton'])){
                             <td><?php echo $row['data_registrazione']?></td>
                             <form method="post">
                             <td><button type='submit' name='deleteUserButton' value="<?php echo $row['email'];?>">Elimina</button></td>
-                            <td><button type='submit' name='disableUserButton' value="<?php echo $row['email'];?>">Disabilita</button></td>
+                            <?php
+                                if($row['stato'] == 'si'){
+                                    ?>
+                                    <td><button type='submit' name='enableUserButton' value="<?php echo $row['email'];?>">Abilita</button></td>
+                                    <?php
+                                }else{
+                                    ?>
+                                    <td><button type='submit' name='disableUserButton' value="<?php echo $row['email'];?>">Disabilita</button></td>
+                                    <?php
+                                }
+                            ?>
+                            
                             </form>
                            </tr>
                            <?php

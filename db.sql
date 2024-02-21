@@ -23,6 +23,32 @@ CREATE TABLE
         data_inserimento TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     );
 
+    /*Creare una tabella per prendere in prestito i libri*/
+CREATE TABLE prestiti (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_utente INT,
+    id_libro INT,
+    data_prestito TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    data_restituzione TIMESTAMP,
+    FOREIGN KEY (id_utente) REFERENCES utenti(id),
+    FOREIGN KEY (id_libro) REFERENCES libri(id)
+);
+
+    /*Creare una tabella per lasciare delle recensioni dei libri*/
+CREATE TABLE recensioni (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_libro INT,
+    id_utente INT,
+    voto INT,
+    testo TEXT,
+    data_recensione TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_libro) REFERENCES libri(id),
+    FOREIGN KEY (id_utente) REFERENCES utenti(id)
+);
+
+    /*Inserire alcuni dati di esempio nella tabella utenti*/
+
+
 INSERT INTO
     libri (
         titolo,

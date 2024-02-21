@@ -3,6 +3,7 @@
 include 'includes/connection.php';
 //start the session
 session_start();
+$connessione = Connection::new();
 if (isset($_SESSION['user'])) {
     if ($_SESSION['role'] == "admin") {
         header("Location: dashboardAmministratori.php");
@@ -11,6 +12,16 @@ if (isset($_SESSION['user'])) {
 }else{
     header("Location: login.php");
     die();
+}
+//get the user's email
+$email = $_SESSION['user'];
+if (isset($_POST['deleteAccount'])) {
+    $query = "DELETE FROM utenti WHERE email = '$email'";
+    $result = $connessione->query($query);
+    if ($result) {
+        header("Location: logout.php");
+        die();
+    }
 }
 ?>
     <!DOCTYPE html>
@@ -35,8 +46,13 @@ if (isset($_SESSION['user'])) {
     <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">
         <div class=" flex center">
             <div class="flex logoutButton">
-            <img src="images/logoutLogo.svg" alt="headedrLogo">
-            <a href="logout.php">Logout</a>
+                <div>
+                    <img src="images/logoutLogo.svg" alt="headedrLogo">
+                    <a href="logout.php">Logout</a>
+                </div>
+                <div>
+                    <form action="" method="post"><button type="submit" name="deleteAccount">Nuclearizza account</button></form>
+                </div>
             </div>
         </div>
     </div>
