@@ -70,28 +70,7 @@ if (isset($_POST['deleteAccount'])) {
 
             <div id="div1" class="content-div gridTemplate parentHeight gridCenter">
                 <div class="item">
-                    <table class="userTable">
-                        <caption><strong>Ricerca libro</strong></caption>
-                        <th>Titolo</th>
-                        <th>Nome Autore</th>
-                        <th>generi</th>
-                        <th></th>
-                        <form method="post">
-                            <tr>
-                                <td><input class="userAddButton" type="text" name="titolo"></td>
-                                <td><input class="userAddButton" type="text" name="autore"></td>
-                                <td>
-                                    <select name="generi">
-                                        <option value="*"> -- Selezione una opzione --</option>
-                                        <?php
-                                        include 'includes/generi.php';
-                                        ?>
-                                    </select>
-                                </td>
-                                <td><button type='submit' name='searchBookButton'>Cerca</button></td>
-                            </tr>
-                        </form>
-                    </table>
+                    
                     <table class="userTable">
                         <?php
                         if (isset($_POST['searchBookButton'])) {
@@ -244,7 +223,39 @@ if (isset($_POST['deleteAccount'])) {
             </div>
 
             <div id="div3" class="content-div gridTemplate parentHeight gridCenter">
-                <div class="item">dokuvh</div>
+                <div class="item">
+                    <table class="userTable">
+                        <th>Isbn</th>
+                        <th>Titolo</th>
+                        <th>Autore</th>
+                        <th>Anno di Pubblicazione</th>
+                        <th>Genere</th>
+                        <th>Quantita rimasta</th>
+                        <th>Morte</th>
+                        <?php
+                        $getBooksquery = "SELECT isbn, titolo, autore, anno_pubblicazione, genere, quantita FROM libri";
+                        $result = $connessione->query($getBooksquery);
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row['isbn'] . "</td>";
+                            echo "<td>" . $row['titolo'] . "</td>";
+                            echo "<td>" . $row['autore'] . "</td>";
+                            echo "<td>" . $row['anno_pubblicazione'] . "</td>";
+                            echo "<td>" . $row['genere'] . "</td>";
+                            echo "<td>" . $row['quantita'] . "</td>";
+                            ?>
+                            <td>
+                                <form action="recensioni_libro.php" method="post">
+                                    <button type="submit" name="readReviews" value="<?php echo $row['isbn']; ?>">Leggi recensioni</button>
+                                </form>
+                            </td>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </table>
+
+                </div>
             </div>
         </div>
     </main>
