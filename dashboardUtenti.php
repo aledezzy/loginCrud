@@ -39,7 +39,7 @@ if (isset($_POST['deleteAccount'])) {
     <div class="sidebarGridTemplate" id="dashboardSidebar">
         <button class="sidebarButton" onclick="showDiv(1)">Cerca Libro</button>
         <button class="sidebarButton" onclick="showDiv(2)">Prestiti</button>
-        <button class="sidebarButton" onclick="showDiv(3)">Button 3</button>
+        <button class="sidebarButton" onclick="showDiv(3)">Recensioni</button>
     </div>
 
     <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">
@@ -50,7 +50,8 @@ if (isset($_POST['deleteAccount'])) {
                     <a href="logout.php">Logout</a>
                 </div>
                 <div>
-                    <form action="" method="post"><button type="submit" name="deleteAccount">Nuclearizza account</button></form>
+                    <form action="" method="post"><button type="submit" name="deleteAccount">Nuclearizza
+                            account</button></form>
                 </div>
             </div>
         </div>
@@ -95,26 +96,26 @@ if (isset($_POST['deleteAccount'])) {
                         <?php
                         if (isset($_POST['searchBookButton'])) {
                             /*if(isset($_POST['searchBookButton'])){
-                            $queryStr = "SELECT * FROM  libri WHERE 1=1";
-                            
-                            if(!$_POST['titolo']==""){
-                                echo "ho il titolo<br>";
-                                $queryStr.=" AND ? LIKE titolo";
-                               
-                            }
-                            if(!$_POST['autore']==""){
-                                echo "ho il autore<br>";
-                                $queryStr.=" AND ? LIKE autore";
+                                $queryStr = "SELECT * FROM  libri WHERE 1=1";
                                 
-                            }
-                            if(!$_POST['generi']==""){
-                                echo "ho il genere<br>";
-                                $queryStr.=" AND ? LIKE genere";
-                               
-                            }
+                                if(!$_POST['titolo']==""){
+                                    echo "ho il titolo<br>";
+                                    $queryStr.=" AND ? LIKE titolo";
+                                   
+                                }
+                                if(!$_POST['autore']==""){
+                                    echo "ho il autore<br>";
+                                    $queryStr.=" AND ? LIKE autore";
+                                    
+                                }
+                                if(!$_POST['generi']==""){
+                                    echo "ho il genere<br>";
+                                    $queryStr.=" AND ? LIKE genere";
+                                   
+                                }
 
-                            
-                                $query = $connessione -> prepare($queryStr);*/
+                                
+                                    $query = $connessione -> prepare($queryStr);*/
 
                             if (!empty($_POST['titolo']) || !empty($_POST['autore']) || !empty($_POST['generi'])) {
                                 $queryStr = "SELECT * FROM libri WHERE 1=1";
@@ -148,7 +149,7 @@ if (isset($_POST['deleteAccount'])) {
                                     case 3:
                                         $query->bind_param("sss", $params[0], $params[1], $params[2]);
                                         break;
-                                        // Add more cases if needed
+                                    // Add more cases if needed
                                 }
 
                                 $query->execute();
@@ -168,9 +169,9 @@ if (isset($_POST['deleteAccount'])) {
                             }
                         } else {
                             // Rest of the code
+                        
 
-
-                        ?>
+                            ?>
 
                             <table class="userTable">
                                 <th>Isbn</th>
@@ -191,62 +192,60 @@ if (isset($_POST['deleteAccount'])) {
                                     echo "<td>" . $row['anno_pubblicazione'] . "</td>";
                                     echo "<td>" . $row['genere'] . "</td>";
                                     echo "<td>" . $row['quantita'] . "</td>";
-                                ?>
+                                    ?>
+                                    <form method="post">
+                                        <td><button type='submit' name='deleteBookButton'
+                                                value="<?php echo $row['isbn'] ?>">Elimina</button></td>
 
+                                    </form>
+                                    <form action="modifyBook.php" method="post">
+                                        <td><button type='submit' name='modifyBookButton'
+                                                value="<?php echo $row['isbn'] ?>">Modifica</button></td>
+                                    </form>
                                     </tr>
-                            <?php
+                                    <?php
                                 }
-                            }
-                            ?>
-                           
+                        }
+                        ?>
+                        </table>
+
                 </div>
             </div>
-        
+
             <div id="div2" class="content-div gridTemplate parentHeight gridCenter">
-                <h1>WWAYPo</h1>
-                <table class="userTable">
-                    <th>Isbn</th>
-                    <th>Titolo</th>
-                    <th>Autore</th>
-                    <th>Anno di Pubblicazione</th>
-                    <th>Genere</th>
-                    <th>Quantita rimasta</th>
-                    <th></th>
-                    <?php
-                    $getBooksquery = "SELECT isbn, titolo, autore, anno_pubblicazione, genere, quantita FROM libri";
-                    $result = $connessione->query($getBooksquery);
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . $row['isbn'] . "</td>";
-                        echo "<td>" . $row['titolo'] . "</td>";
-                        echo "<td>" . $row['autore'] . "</td>";
-                        echo "<td>" . $row['anno_pubblicazione'] . "</td>";
-                        echo "<td>" . $row['genere'] . "</td>";
-                        echo "<td>" . $row['quantita'] . "</td>";
-                    ?>
+                <div class="item">
+                    <table class="userTable">
+                        <th>Isbn</th>
+                        <th>Titolo</th>
+                        <th>Autore</th>
+                        <th>Anno di Pubblicazione</th>
+                        <th>Genere</th>
+                        <th>Quantita rimasta</th>
+                        <th></th>
+                        <?php
+                        $getBooksquery = "SELECT isbn, titolo, autore, anno_pubblicazione, genere, quantita FROM libri";
+                        $result = $connessione->query($getBooksquery);
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . $row['isbn'] . "</td>";
+                            echo "<td>" . $row['titolo'] . "</td>";
+                            echo "<td>" . $row['autore'] . "</td>";
+                            echo "<td>" . $row['anno_pubblicazione'] . "</td>";
+                            echo "<td>" . $row['genere'] . "</td>";
+                            echo "<td>" . $row['quantita'] . "</td>";
+                            ?>
 
-                        </tr>
-                    <?php
-                    }
-
-                    ?>
-
-                    <div class="item"></div>
+                            </tr>
+                            <?php
+                        }
+                        ?>
+                    </table>
+                </div>
             </div>
 
             <div id="div3" class="content-div gridTemplate parentHeight gridCenter">
-                <div class="item"></div>
-                <div class="item"></div>
-                <div class="item">
-
-                </div>
-                <div class="item">
-
-                </div>
+                <div class="item">dokuvh</div>
             </div>
-        </div>
-        </div>
-
         </div>
     </main>
 
