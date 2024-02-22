@@ -46,6 +46,12 @@ CREATE TABLE recensioni (
     FOREIGN KEY (id_utente) REFERENCES utenti(id)
 );
 
+/*Creare una tabella per gli utentidisabilitati*/
+CREATE TABLE utentidisabilitati (
+    email VARCHAR(100),
+    stato ENUM ('si', 'no') NOT NULL DEFAULT 'no',
+    Foreign Key (email) REFERENCES utenti(email)
+);
     /*Inserire alcuni dati di esempio nella tabella utenti*/
 
 

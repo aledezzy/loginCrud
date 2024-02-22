@@ -302,6 +302,10 @@ if(isset($_POST['enableUserButton'])){
             ?>
                     <form method="post">
                         <td><button type='submit' name='deleteBookButton' value="<?php echo $row['isbn']?>">Elimina</button></td>
+                        
+                    </form>
+                    <form action="modifyBook.php" method="post">
+                        <td><button type='submit' name='modifyBookButton' value="<?php echo $row['isbn']?>">Modifica</button></td>
                     </form>
                     </tr>
             <?php
