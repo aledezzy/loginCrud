@@ -246,6 +246,8 @@ if (isset($_POST['deleteAccount'])) {
                             ?>
                             <td>
                                 <form action="recensioni_libro.php" method="post">
+                                    <input type="hidden" name="bookName" value="<?php echo $row['titolo'];?>">
+                                    <input type="hidden" name="bookAuthor" value="<?php echo $row['autore'];?>">
                                     <button type="submit" name="readReviews" value="<?php echo $row['isbn']; ?>">Leggi recensioni</button>
                                 </form>
                             </td>
