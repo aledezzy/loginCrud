@@ -80,7 +80,6 @@ if(isset($_POST['enableUserButton'])){
     id="dashboardSidebar">
         <button class="sidebarButton" onclick="showDiv(1)">Gestione Utenti</button>
         <button class="sidebarButton" onclick="showDiv(2)">Libreria</button>
-        <button class="sidebarButton" onclick="showDiv(3)">Gestione Libri</button>
     </div>
 
     <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">
@@ -339,9 +338,7 @@ if(isset($_POST['enableUserButton'])){
             </div>
         </div>
 
-        <div id="div3" class="content-div  parentHeight gridCenter">
-            <div class="item" style="color:#2563eb"></div>
-        </div>
+        
     </div>
     </div>
 
