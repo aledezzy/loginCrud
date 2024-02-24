@@ -15,7 +15,7 @@
 
                 <img style="display:inline; height:64px; width:64px;" src="images/newUserIMG.svg" alt="UserIMG">
 
-                <div class="flex" style="gap : 1em;">
+                <div class="flex" style="gap: 1em;">
                     <div class="fullWidth">
                         <p style="margin-bottom:5px;">Nome</p>
                         <input class="loginButton loginBorder" type="text" name="UserName"></input>
