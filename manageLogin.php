@@ -77,6 +77,7 @@ if (!(password_verify($userPassword, $criptedPassword))) {
     echo "Password errata";
     //redirect to login.php
     header("Location: includes/ERROR.php");
+    //Ciao mondo
     exit();
 } else {
     echo "Password corretta";
