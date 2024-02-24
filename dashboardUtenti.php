@@ -23,6 +23,79 @@ if (isset($_POST['deleteAccount'])) {
         die();
     }
 }
+//get the user's id
+$query = "SELECT id FROM utenti WHERE email = ?";
+$stmt = $connessione->prepare($query);
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$id_utente = $row['id'];
+
+if (isset($_POST['prendiPrestito'])) {
+    $isbn = $_POST['prendiPrestito'];
+    $query = "SELECT quantita FROM libri WHERE isbn = ?";
+    $stmt = $connessione->prepare($query);
+    $stmt->bind_param("s", $isbn);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+    if ($row['quantita'] > 0) {
+        //query for found the id_libro from isbn
+        $query = "SELECT id FROM libri WHERE isbn = ?";
+        $stmt = $connessione->prepare($query);
+        $stmt->bind_param("s", $isbn);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $id_libro = $row['id'];
+
+
+        $query = "INSERT INTO prestiti (id_utente, id_libro) VALUES (?, ?)";
+        $stmt = $connessione->prepare($query);
+        $stmt->bind_param("ss", $id_utente, $id_libro);
+        $stmt->execute();
+        if ($stmt) {
+            $query = "UPDATE libri SET quantita = quantita - 1 WHERE isbn = ?";
+            $stmt = $connessione->prepare($query);
+            $stmt->bind_param("s", $isbn);
+            $stmt->execute();
+            if ($stmt) {
+                header("Location: dashboardUtenti.php");
+                die();
+            }
+        }
+    } else {
+        echo "<script>alert('Non ci sono copie disponibili di questo libro')</script>";
+    }
+
+}
+
+if (isset($_POST['restituisciLibro'])) {
+    $isbn = $_POST['restituisciLibro'];
+    $query = "SELECT id FROM libri WHERE isbn = ?";
+        $stmt = $connessione->prepare($query);
+        $stmt->bind_param("s", $isbn);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $id_libro = $row['id'];
+
+    $query = "DELETE FROM prestiti WHERE id_utente = ? AND id_libro = ?";
+    $stmt = $connessione->prepare($query);
+    $stmt->bind_param("ss", $id_utente, $id_libro);
+    $stmt->execute();
+    if ($stmt) {
+        $query = "UPDATE libri SET quantita = quantita + 1 WHERE isbn = ?";
+        $stmt = $connessione->prepare($query);
+        $stmt->bind_param("s", $isbn);
+        $stmt->execute();
+        if ($stmt) {
+            header("Location: dashboardUtenti.php");
+            die();
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="it">
@@ -70,7 +143,7 @@ if (isset($_POST['deleteAccount'])) {
 
             <div id="div1" class="content-div gridTemplate parentHeight gridCenter">
                 <div class="item">
-                    
+
                     <table class="userTable">
                         <?php
                         if (isset($_POST['searchBookButton'])) {
@@ -193,6 +266,9 @@ if (isset($_POST['deleteAccount'])) {
 
             <div id="div2" class="content-div gridTemplate parentHeight gridCenter">
                 <div class="item">
+
+
+                    <h1>Scegli un libro da prendere in prestito</h1>
                     <table class="userTable">
                         <th>Isbn</th>
                         <th>Titolo</th>
@@ -200,11 +276,17 @@ if (isset($_POST['deleteAccount'])) {
                         <th>Anno di Pubblicazione</th>
                         <th>Genere</th>
                         <th>Quantita rimasta</th>
-                        <th></th>
+                        <th>Prendi in prestito</th>
                         <?php
+                        /*Prestiti ho utente
+Faccio una tabella per mostrare i libri presi in prestito dall'utente ( controllando dalla tabella prestiti l'id_utente) e faccio un bottone per resitutire il libro, aumentando così la quantità disponibile di quel libro
+e sotto faccio una tabella con tutti i libri nella tabella libri che controlla quando premo il tasto prendi in prestito se quantita > 0, altrimenti alert con errore */
                         $getBooksquery = "SELECT isbn, titolo, autore, anno_pubblicazione, genere, quantita FROM libri";
-                        $result = $connessione->query($getBooksquery);
-                        while ($row = $result->fetch_assoc()) {
+                        $result = $connessione->prepare($getBooksquery);
+                        $result->execute();
+                        $resultBooks = $result->get_result();
+                        while ($row = $resultBooks->fetch_assoc()) {
+                            
                             echo "<tr>";
                             echo "<td>" . $row['isbn'] . "</td>";
                             echo "<td>" . $row['titolo'] . "</td>";
@@ -213,12 +295,56 @@ if (isset($_POST['deleteAccount'])) {
                             echo "<td>" . $row['genere'] . "</td>";
                             echo "<td>" . $row['quantita'] . "</td>";
                             ?>
-
+                            <form method="post">
+                                <td><button type='submit' name='prendiPrestito' value="<?php echo $row['isbn'] ?>">Prendi in prestito</button></td>
+                            </form>
                             </tr>
                             <?php
                         }
+                        echo "</table>";
                         ?>
-                    </table>
+                        <div class="item">
+                            
+                            <table class="userTable">
+                                <th>Isbn</th>
+                                <th>Titolo</th>
+                                <th>Autore</th>
+                                <th>Anno di Pubblicazione</th>
+                                <th>Genere</th>
+                                <th>Quantita rimasta</th>
+                                <th>Restituisci</th>
+                        <?php
+                        // Mostrare i libri presi in prestito dall'utente (controllando dalla tabella prestiti l'id_utente)
+                        $getPrestitiQuery = "SELECT l.isbn, l.titolo, l.autore, l.anno_pubblicazione, l.genere, l.quantita
+                        FROM libri l
+                        INNER JOIN prestiti p ON l.id = p.id_libro
+                        WHERE p.id_utente = ?;";
+                        $preparedQuery = $connessione->prepare($getPrestitiQuery);
+                        $preparedQuery->bind_param("i", $id_utente);
+                        $preparedQuery->execute();
+                        $resultPrestiti = $preparedQuery->get_result();
+                        
+                        while ($rowPrestiti = $resultPrestiti->fetch_assoc()) {
+                            
+                            echo "<tr>";
+                            echo "<td>" . $rowPrestiti['isbn'] . "</td>";
+                            echo "<td>" . $rowPrestiti['titolo'] . "</td>";
+                            echo "<td>" . $rowPrestiti['autore'] . "</td>";
+                            echo "<td>" . $rowPrestiti['anno_pubblicazione'] . "</td>";
+                            echo "<td>" . $rowPrestiti['genere'] . "</td>";
+                            echo "<td>" . $rowPrestiti['quantita'] . "</td>";
+                            ?>
+                            <form method="post">
+                                <td><button type='submit' name='restituisciLibro'
+                                        value="<?php echo $rowPrestiti['isbn'] ?>">Restituisci</button></td>
+                            </form>
+                        </tr>
+                            <?php
+                        }
+                        ?>
+                        </table>
+                        
+                    </div>
                 </div>
             </div>
 
@@ -240,15 +366,14 @@ if (isset($_POST['deleteAccount'])) {
                             echo "<td>" . $row['isbn'] . "</td>";
                             echo "<td>" . $row['titolo'] . "</td>";
                             echo "<td>" . $row['autore'] . "</td>";
-                            echo "<td>" . $row['anno_pubblicazione'] . "</td>";
+                            echo "<td>" . $row['anno_pubblicazione']. "</td>";
                             echo "<td>" . $row['genere'] . "</td>";
                             echo "<td>" . $row['quantita'] . "</td>";
                             ?>
                             <td>
                                 <form action="recensioni_libro.php" method="post">
-                                    <input type="hidden" name="bookName" value="<?php echo $row['titolo'];?>">
-                                    <input type="hidden" name="bookAuthor" value="<?php echo $row['autore'];?>">
-                                    <button type="submit" name="readReviews" value="<?php echo $row['isbn']; ?>">Leggi recensioni</button>
+                                    <button type="submit" name="readReviews" value="<?php echo $row['isbn']; ?>">Leggi
+                                        recensioni</button>
                                 </form>
                             </td>
                             </tr>
