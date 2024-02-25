@@ -26,24 +26,6 @@ if(isset($_POST['addUser'])){
     $preparedQuery->execute();
 }
 
-
-
-if(isset($_POST['deleteBookButton'])){
-    $connessione -> query("DELETE FROM libri WHERE isbn='".$_POST['deleteBookButton']."'");
-}
-
-if(isset($_POST['addBookButton'])){
-    $query = "INSERT INTO libri (titolo, autore, isbn, anno_pubblicazione, genere, quantita, descrizione)
-              VALUES (?, ?, ?, ?, ?, ?, ?)";
-    $preparedQuery = $connessione->prepare($query);
-    $preparedQuery->bind_param("sssssis", $_POST['titolo'], $_POST['autore'], 
-                                          $_POST['isbn'], $_POST['anno_pubblicazione'],
-                                          $_POST['genere'], $_POST['quantita'],
-                                          $_POST['descrizione']
-                                        );
-    $preparedQuery->execute();
-}
-
 if(isset($_POST['disableUserButton'])){
     $query = "INSERT INTO utentidisabilitati
               VALUES (?, ?)";
@@ -62,6 +44,24 @@ if(isset($_POST['enableUserButton'])){
 }
 
 
+if(isset($_POST['deleteBookButton'])){
+    $connessione -> query("DELETE FROM libri WHERE isbn='".$_POST['deleteBookButton']."'");
+}
+
+if(isset($_POST['addBookButton'])){
+    $query = "INSERT INTO libri (titolo, autore, isbn, anno_pubblicazione, genere, quantita, descrizione)
+              VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $preparedQuery = $connessione->prepare($query);
+    $preparedQuery->bind_param("sssssis", $_POST['titolo'], $_POST['autore'], 
+                                          $_POST['isbn'], $_POST['anno_pubblicazione'],
+                                          $_POST['genere'], $_POST['quantita'],
+                                          $_POST['descrizione']
+                                        );
+    $preparedQuery->execute();
+}
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -78,8 +78,11 @@ if(isset($_POST['enableUserButton'])){
 <body>
     <div class="sidebarGridTemplate"
     id="dashboardSidebar">
-        <button class="sidebarButton" onclick="showDiv(1)">Gestione Utenti</button>
-        <button class="sidebarButton" onclick="showDiv(2)">Libreria</button>
+        <a href="manage_utenti.php">Gestione Utenti</a>
+        <a href="manage_libri.php">Gestione Libri</a>
+        <a href="manage_prestiti.php">Gestione Prestiti</a>
+        <!-- <button class="sidebarButton" onclick="showDiv(2)">Prestiti</button> -->
+        <button class="sidebarButton" onclick="showDiv(3)">Recensioni</button>
     </div>
 
     <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">
@@ -103,73 +106,7 @@ if(isset($_POST['enableUserButton'])){
 
             <div id="div1" class="content-div parentHeight">
                 <div class="item">
-                <table class="userTable">
-                            <caption><strong>Aggiungi utente</strong></caption>
-                            <th>Nome</th>
-                            <th>Cognome</th>
-                            <th>E-mail</th>
-                            <th>Password</th>
-                            <th></th>
-                        <form method="post">
-                            <tr>
-                            <td><input class="userAddButton" type="text" name="nome"></td>
-                            <td><input class="userAddButton" type="text" name="cognome"></td>
-                            <td><input class="userAddButton" type="text" name="email"></td>
-                            <td><input class="userAddButton" type="text" name="password"></td>
-                            <td><button type='submit' name='addUser'>Aggiungi</button></td>
-                            </tr>
-                        </form>
-                    </table>
-                        
-                    <h1>Lista Utenti</h1>
-                    <table class="userTable">
-
-                        <th>Nome</th>
-                        <th>Cognome</th>
-                        <th>E-mail</th>
-                        <th>Ruolo</th>
-                        <th>Data Registrazione</th>
-                        <th>Elimina</th>
-                        <th>Abilita/Disabilita</th>
-                        
-                    <?php
-                            $getUsersquery = "SELECT nome, cognome, utenti.email, ruolo, data_registrazione, stato 
-                                            FROM utenti
-                                            LEFT JOIN utentidisabilitati ON utenti.email = utentidisabilitati.email";
-                        $result = $connessione -> query($getUsersquery);
-                        while($row = $result->fetch_assoc()){
-                           if($row['ruolo'] != 'admin'){
-                    ?>
-                            <tr>
-                            <td class="boh"><?php echo $row['nome']?></td>
-                            <td><?php echo $row['cognome']?></td>
-                            <td><?php echo $row['email']?></td>
-                            <td><?php echo $row['ruolo']?></td>
-                            <td><?php echo $row['data_registrazione']?></td>
-                            <form method="post">
-                            <td><button type='submit' name='deleteUserButton' value="<?php echo $row['email'];?>">Elimina</button></td>
-                            <?php
-                                if($row['stato'] == 'si'){
-                                    ?>
-                                    <td><button type='submit' name='enableUserButton' value="<?php echo $row['email'];?>">Abilita</button></td>
-                                    <?php
-                                }else{
-                                    ?>
-                                    <td><button type='submit' name='disableUserButton' value="<?php echo $row['email'];?>">Disabilita</button></td>
-                                    <?php
-                                }
-                            ?>
-                            
-                            </form>
-                           </tr>
-                           <?php
-                            }
-                        }
-                        $result -> free_result();
-                        
-                        ?>
-                        </table>
-                        
+                
 
                 </div>
             </div>

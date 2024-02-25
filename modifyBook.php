@@ -32,8 +32,8 @@ if (isset($_SESSION['user'])) {
         die();
     }
 }
-if (isset($_POST['confirmButton'])) {
-    $isbn = $_POST['isbn'];
+if (isset($_POST['modifyBookButton'])) {
+    $isbn = $_POST['modifyBookButton'];
     $titolo = $_POST['titolo'];
     $autore = $_POST['autore'];
     $anno_pubblicazione = $_POST['anno_pubblicazione'];
@@ -45,7 +45,10 @@ if (isset($_POST['confirmButton'])) {
     $query->bind_param("sssisis", $isbn, $titolo, $autore, $anno_pubblicazione, $genere, $quantita, $isbn);
     
     if ($query->execute()) {
-        header("Location: dashboardAmministratori.php");
+        ?>
+            <script>alert("Libro Modificato con successo")</script>
+        <?php
+        header("Location: manage_libri.php");
         die();
     } else {
         echo "Errore";
