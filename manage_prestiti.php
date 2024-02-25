@@ -102,19 +102,20 @@ if (isset($_POST['restituisciLibro'])) {
           e sotto faccio una tabella con tutti i libri nella tabella libri che controlla quando premo il tasto prendi 
           in prestito se quantita > 0, altrimenti alert con errore 
         */
-        $getBooksquery = "SELECT l.isbn, l.titolo, l.autore, l.anno_pubblicazione, l.genere, l.quantita
+        $getBooksquery = "SELECT l.*
         FROM libri l
-        LEFT JOIN prestiti p
-        ON id_libro != ?
-        WHERE p.id_utente = ?
-        GROUP BY l.titolo;";
+        LEFT JOIN (
+            SELECT id_libro
+            FROM prestiti
+            WHERE id_utente = ?
+        ) AS p ON p.id_libro = ?
+        WHERE p.id_libro IS NULL;";
         $result = $connessione->prepare($getBooksquery);
-        //$result->bind_param("ii", , $id_utente);
+        $result->bind_param("ii", $id_utente, $id_libro);
         $result->execute();
         $resultBooks = $result->get_result();
         while ($row = $resultBooks->fetch_assoc()) {
             ?>
-
             <tr>
                 <td>
                     <?php echo $row['isbn'] ?>
@@ -145,7 +146,7 @@ if (isset($_POST['restituisciLibro'])) {
     </table>
 
     <?php
-            $getPrestitiQuery = "SELECT l.isbn, l.titolo, l.autore, l.anno_pubblicazione, l.genere, l.quantita
+            $getPrestitiQuery = "SELECT l.id, l.isbn, l.titolo, l.autore, l.anno_pubblicazione, l.genere, l.quantita
                                 FROM libri l
                                 INNER JOIN prestiti p ON l.id = p.id_libro
                                 WHERE p.id_utente = ?;";
@@ -167,7 +168,7 @@ if (isset($_POST['restituisciLibro'])) {
         // Mostrare i libri presi in prestito dall'utente (controllando dalla tabella prestiti l'id_utente)
 
             while ($row = $resultPrestiti->fetch_assoc()) {
-                    var_dump($row)
+                    //var_dump($row)
                 ?>
     
                 <tr>
@@ -190,7 +191,7 @@ if (isset($_POST['restituisciLibro'])) {
                         <?php echo $row['quantita'] ?>
                     </td>
                     <form method="post">
-                        <td><button type='submit' name='restituisciLibro' value="<?php echo $row['isbn'] ?>">Restituisci</button></td>
+                        <td><button type='submit' name='restituisciLibro' value="<?php echo $row['id'] ?>">Restituisci</button></td>
                     </form>
                 </tr>
                 <?php

@@ -66,7 +66,7 @@ if (isset($_POST['restituisciLibro'])) {
         <a href="manage_libri.php">Gestione Libri</a>
         <a href="manage_prestiti.php">Gestione Prestiti</a>
         <!-- <button class="sidebarButton" onclick="showDiv(2)">Prestiti</button> -->
-        <button class="sidebarButton" onclick="showDiv(3)">Recensioni</button>
+        <a href="recensioni_libro.php">Guarda recensioni</a>
     </div>
 
     <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">

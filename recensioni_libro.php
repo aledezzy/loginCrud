@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+include "includes/connection.php";
+$connessione = Connection::new();
+//readReviews premuto e mi da isbn libro
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 
@@ -23,86 +31,110 @@
     </div>
 
     <h1 style="text-align:center">INSERISCI RECENSIONE PER QUESTO LIBRO</h1>
-    <div class="flex" style="align-items:center">
-        <form action="" method="post">
-            <button type="submit" name="newReview" value="<?php echo $_POST['readReviews']?>">Lascia recensione</button>
-            <input type="text" name="testoRecensione">
-            <input type="text" name="votoRecensione">
-        </form>
-    </div>
-    <?php
-        session_start();
-
-        include "includes/connection.php";
-        $connessione = Connection::new();
-        //readReviews premuto e mi da isbn libro
-        
-        if (isset($_POST['readReviews'])) {
-            $isbn = htmlentities($_POST['readReviews']);
-            $sql = "SELECT id FROM libri WHERE isbn = ?";
-            $preparedQuery = $connessione->prepare($sql);
-            $preparedQuery->bind_param("s", $isbn);
-            if ($preparedQuery->execute()) {
-                $result = $preparedQuery->get_result();
-                while ($row = $result->fetch_array()) {
-                    $bookID = $row['id'];
-                }
-            }
-            $result->free_result();
-
-            $sql = "SELECT * FROM recensioni WHERE id_libro = ?";
-            $preparedQuery = $connessione->prepare($sql);
-            $preparedQuery->bind_param("s", $bookID);
-            if ($preparedQuery->execute()) {
-                $result = $preparedQuery->get_result();
-                while ($row = $result->fetch_array()) {
-                    echo "<p>" . $row['testo'] . "</p>";
-                    echo "<p>" . $row['voto'] . "</p>";
-                }
-            }
-            
-        }
-        //newReview premuto
-        //quindi inserisco nellan tabella recensioni id_libro, id_utente(preso dalla variabile di sessione), voto, testo
-        if(isset($_POST['newReview'])){
-            $isbn = htmlentities($_POST['newReview']);
-            $sql = "SELECT id FROM libri WHERE isbn = ?";
-            $preparedQuery = $connessione->prepare($sql);
-            $preparedQuery->bind_param("s", $isbn);
-            if ($preparedQuery->execute()) {
-                $result = $preparedQuery->get_result();
-                while ($row = $result->fetch_array()) {
-                    $bookID = $row['id'];
-                }
-            }
-            $result->free_result();
-            $userID = $_SESSION['user'];
-            //faccio quey per trovare l'id dell'utente loggato avento la mail dalla variabile di sessione
-            $sql = "SELECT id FROM utenti WHERE email = ?";
-            $preparedQuery = $connessione->prepare($sql);
-            $preparedQuery->bind_param("s", $userID);
-            if ($preparedQuery->execute()) {
-                $result = $preparedQuery->get_result();
-                while ($row = $result->fetch_array()) {
-                    $userID = $row['id'];
-                }
-            }
-            $voto = htmlentities($_POST['votoRecensione']);
-            $testo = htmlentities($_POST['testoRecensione']);
-            $sql = "INSERT INTO recensioni (id_libro, id_utente, voto, testo) VALUES (?, ?, ?, ?)";
-            $preparedQuery = $connessione->prepare($sql);
-            $preparedQuery->bind_param("iiis", $bookID, $userID, $voto, $testo);
-            if ($preparedQuery->execute()) {
-                //alert di successo?>
-                <script>
-                    alert("Recensione lasciata con successo. Grazie per il tuo contributo.");
-                    window.location.href = "dashboardUtenti.php";
-                </script>
+    <form action="" method="post">
+        <select name="bookID">
             <?php
+            $getBooksquery = "SELECT id, titolo, autore FROM libri";
+            $result = $connessione->query($getBooksquery);
 
+            while ($row = $result->fetch_assoc()) {
+
+                ?>
+
+                <option value="<?php echo $row['id'] ?>">
+                    <?php echo $row['titolo'] . "  by " . $row['autore'] ?>
+                </option>
+
+                <?php
             }
-        }
+
             ?>
+        </select>
+        <button type="submit" name="readReviews">Leggi recensioni</button>
+    </form>
+    <?php
+    if (isset($_POST['readReviews'])) {
+        $BOOKID = $_POST['bookID'];
+        $queryStr = "SELECT id_utente, voto, testo, data_recensione FROM recensioni WHERE id_libro = ?";
+        $preparedQuery = $connessione->prepare($queryStr);
+        $preparedQuery->bind_param("i", $BOOKID);
+        $preparedQuery->execute();
+        $result = $preparedQuery->get_result();
+        ?>
+        <table class="userTable">
+            <?php
+            while ($row = $result->fetch_assoc()) {
+
+                ?>
+                <tr>
+                    <td>
+                        <?php if (isset($row['id_utente'])) {
+                            $preparedQuery = $connessione->prepare("SELECT email FROM utenti WHERE id = ?");
+                            $preparedQuery->bind_param("s", $row['id_utente']);
+                            if ($preparedQuery->execute()) {
+                                $resultUser = $preparedQuery->get_result();
+                                $rowUser = $resultUser->fetch_assoc();
+                                echo $rowUser['email'];
+                            }
+                        } else {
+                            echo "Utente Nuclearizzato";
+                        }
+                        ?>
+                    </td>
+                    <td>
+                        <?php echo $row['testo'] ?>
+                    </td>
+                    <td>
+                        <?php echo $row['voto'] ?>
+                    </td>
+                    <td>
+                        <?php echo $row['data_recensione'] ?>
+                    </td>
+                </tr>
+                <?php
+            }
+            ?>
+            <tr>
+                <form action="" method="post">
+                    <td style="color: gray;">
+                        <?php echo $_SESSION['user'] . "" ?>
+                    </td>
+                    <td><input type="text" name="testoRecensione"></td>
+                    <td><input type="text" name="votoRecensione"></td>
+                    <td><button type="submit" name="newReview" value="<?php echo $BOOKID ?? "" ?>">Lascia
+                            recensione</button>
+                    </td>
+                    <?php
+                    $preparedQuery = $connessione->prepare("SELECT id FROM utenti WHERE email = ?");
+                    $preparedQuery->bind_param("s", $_SESSION['user']);
+                    if ($preparedQuery->execute()) {
+                        $resultUser = $preparedQuery->get_result();
+                        $rowUser = $resultUser->fetch_assoc();
+                        $USERID = $rowUser['id'];
+                    }
+                    ?>
+                    <td><input type="hidden" name="userID" value="<?php echo $USERID ?>"></td>
+            </tr>
+        </table>
+
+        <?php
+    }
+    if (isset($_POST['newReview'])) {
+        $voto = htmlentities($_POST['votoRecensione']);
+        $testo = htmlentities($_POST['testoRecensione']);
+        $sql = "INSERT INTO recensioni (id_libro, id_utente, voto, testo) VALUES (?, ?, ?, ?)";
+        $preparedQuery = $connessione->prepare($sql);
+        $preparedQuery->bind_param("iiis", $_POST['newReview'], $_POST['userID'], $_POST['votoRecensione'], $_POST['testoRecensione']);
+        if ($preparedQuery->execute()) {
+            ?> //alert di successo
+            <script>
+                alert("Recensione lasciata con successo. Grazie per il tuo contributo.");
+                window.location.href = "dashboardUtenti.php";
+            </script>
+            <?php
+        }
+    }
+    ?>
 
 </body>
 
