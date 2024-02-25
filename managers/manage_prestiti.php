@@ -1,4 +1,4 @@
-<?php   include "includes/connection.php";
+<?php   include "../includes/connection.php";
         $connessione = Connection::new();
         session_start();
 
@@ -39,12 +39,9 @@ if (isset($_POST['prendiPrestito'])) {
             $stmt = $connessione->prepare($query);
             $stmt->bind_param("s", $isbn);
             $stmt->execute();
-            echo "<script>alert('Libro Prenoato con successo')</script>";
         }
-    } else {
-        echo "<script>alert('Non ci sono copie disponibili di questo libro')</script>";
     }
-    header("Location: dashboardUtenti.php");
+    header("Location: ../dashboardUtenti.php");
 }
 
 if (isset($_POST['restituisciLibro'])) {
@@ -58,7 +55,7 @@ if (isset($_POST['restituisciLibro'])) {
         $stmt->bind_param("s", $_POST['restituisciLibro']);
         $stmt->execute();
         if ($stmt) {
-            header("Location: dashboardUtenti.php");
+            header("Location: ../dashboardUtenti.php");
             die();
         }
     }
@@ -71,7 +68,7 @@ if (isset($_POST['restituisciLibro'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
 
 <body>

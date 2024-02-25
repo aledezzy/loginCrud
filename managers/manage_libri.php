@@ -1,4 +1,4 @@
-<?php include "includes/connection.php";
+<?php include "../includes/connection.php";
 $connessione = Connection::new();
 session_start();
 
@@ -34,11 +34,11 @@ if (isset($_POST['deleteBookButton'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
 
 <body>
-    <a href="login.php">Ritorna alla dashboard</a>
+    <a href="../login.php">Ritorna alla dashboard</a>
     <table class="userTable">
         <table>
             <form action="" method="post">
@@ -46,7 +46,7 @@ if (isset($_POST['deleteBookButton'])) {
                 <input type="text" name="autore">
                 <select name="generi">
                     <option value="*">--Seleziona genere--</option>
-                    <?php include "includes/generi.php" ?>
+                    <?php include "../includes/generi.php" ?>
                 </select>
                 <button type="submit" name="searchBookButton">Cerca</button>
             </form>

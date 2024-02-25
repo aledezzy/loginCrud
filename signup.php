@@ -11,7 +11,7 @@
 </head>
 <body>
 <div class="fullViewport flex flex-center">
-            <form class="loginBoard flex flex-center" action="manageSignup.php" method="post" class="loginPage">
+            <form class="loginBoard flex flex-center" action="managers/manageSignup.php" method="post" class="loginPage">
 
                 <img style="display:inline; height:64px; width:64px;" src="images/newUserIMG.svg" alt="UserIMG">
 

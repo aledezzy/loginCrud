@@ -1,6 +1,6 @@
 <?php
 /*include the class connection.php*/
-include 'includes/connection.php';
+include '../includes/connection.php';
 //start the session
 session_start();
 $connessione = Connection::new();
@@ -52,7 +52,7 @@ if (isset($_POST['enableUserButton'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="../styles/style.css">
 </head>
 
 <body>

@@ -24,7 +24,7 @@ if (isset($_SESSION['user'])) {
 </head>
 <body>
         <div class="fullViewport flex flex-center">
-            <form class="loginBoard flex flex-center" action="manageLogin.php" method="post" class="loginPage">
+            <form class="loginBoard flex flex-center" action="managers/manageLogin.php" method="post" class="loginPage">
  
                 <img style="display:inline; height:64px; width:64px;"src="images/userBadge.svg" alt="UserIMG">
 

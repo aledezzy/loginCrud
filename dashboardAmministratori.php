@@ -78,11 +78,10 @@ if(isset($_POST['addBookButton'])){
 <body>
     <div class="sidebarGridTemplate"
     id="dashboardSidebar">
-        <a href="manage_utenti.php">Gestione Utenti</a>
-        <a href="manage_libri.php">Gestione Libri</a>
-        <a href="manage_prestiti.php">Gestione Prestiti</a>
-        <!-- <button class="sidebarButton" onclick="showDiv(2)">Prestiti</button> -->
-        <button class="sidebarButton" onclick="showDiv(3)">Recensioni</button>
+        <a href="managers/manage_utenti.php">Gestione Utenti</a>
+        <a href="managers/manage_libri.php">Gestione Libri</a>
+        <a href="managers/manage_prestiti.php">Gestione Prestiti</a>
+
     </div>
 
     <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">
