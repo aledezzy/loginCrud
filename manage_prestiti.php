@@ -48,23 +48,14 @@ if (isset($_POST['prendiPrestito'])) {
 }
 
 if (isset($_POST['restituisciLibro'])) {
-    $isbn = $_POST['restituisciLibro'];
-    $query = "SELECT id FROM libri WHERE isbn = ?";
-        $stmt = $connessione->prepare($query);
-        $stmt->bind_param("s", $isbn);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        $id_libro = $row['id'];
-
     $query = "DELETE FROM prestiti WHERE id_utente = ? AND id_libro = ?";
     $stmt = $connessione->prepare($query);
-    $stmt->bind_param("ss", $id_utente, $id_libro);
+    $stmt->bind_param("ss", $id_utente, $_POST['restituisciLibro']);
     $stmt->execute();
     if ($stmt) {
-        $query = "UPDATE libri SET quantita = quantita + 1 WHERE isbn = ?";
+        $query = "UPDATE libri SET quantita = quantita + 1 WHERE id = ?";
         $stmt = $connessione->prepare($query);
-        $stmt->bind_param("s", $isbn);
+        $stmt->bind_param("s", $_POST['restituisciLibro']);
         $stmt->execute();
         if ($stmt) {
             header("Location: dashboardUtenti.php");
@@ -102,19 +93,12 @@ if (isset($_POST['restituisciLibro'])) {
           e sotto faccio una tabella con tutti i libri nella tabella libri che controlla quando premo il tasto prendi 
           in prestito se quantita > 0, altrimenti alert con errore 
         */
-        $getBooksquery = "SELECT l.*
-        FROM libri l
-        LEFT JOIN (
-            SELECT id_libro
-            FROM prestiti
-            WHERE id_utente = ?
-        ) AS p ON p.id_libro = ?
-        WHERE p.id_libro IS NULL;";
-        $result = $connessione->prepare($getBooksquery);
-        $result->bind_param("ii", $id_utente, $id_libro);
-        $result->execute();
-        $resultBooks = $result->get_result();
-        while ($row = $resultBooks->fetch_assoc()) {
+        $getBooksquery = "SELECT libri.id, isbn, titolo, autore, anno_pubblicazione, genere, quantita
+        FROM libri
+        LEFT JOIN prestiti ON prestiti.id_libro = libri.id
+        WHERE prestiti.id_utente IS NULL;";
+        $result = $connessione->query($getBooksquery);
+        while ($row = $result->fetch_assoc()) {
             ?>
             <tr>
                 <td>
