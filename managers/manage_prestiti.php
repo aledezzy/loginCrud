@@ -41,7 +41,7 @@ if (isset($_POST['prendiPrestito'])) {
             $stmt->execute();
         }
     }
-    header("Location: ../dashboardUtenti.php");
+    //header("Location: ../dashboardUtenti.php");
 }
 
 if (isset($_POST['restituisciLibro'])) {
@@ -54,10 +54,10 @@ if (isset($_POST['restituisciLibro'])) {
         $stmt = $connessione->prepare($query);
         $stmt->bind_param("s", $_POST['restituisciLibro']);
         $stmt->execute();
-        if ($stmt) {
+        /*if ($stmt) {
             header("Location: ../dashboardUtenti.php");
             die();
-        }
+        }*/
     }
 }
 ?>
@@ -67,11 +67,12 @@ if (isset($_POST['restituisciLibro'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Gestione prestiti</title>
     <link rel="stylesheet" href="../styles/style.css">
 </head>
 
 <body>
+    <a href="../login.php">Ritorna alla dashboard</a>
     <h1>Scegli un libro da prendere in prestito</h1>
     <table class="userTable">
         <th>Isbn</th>

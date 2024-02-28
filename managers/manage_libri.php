@@ -2,6 +2,7 @@
 $connessione = Connection::new();
 session_start();
 
+
 if (isset($_POST['confirmBookEdit'])) {
     $id = $_POST['confirmBookEdit'];
     $isbn = $_POST['isbn'];
@@ -38,19 +39,31 @@ if (isset($_POST['deleteBookButton'])) {
 </head>
 
 <body>
-    <a href="../login.php">Ritorna alla dashboard</a>
+    <a href="../login.php">Ritorna alla dashboard <br></a>
+    
     <table class="userTable">
         <table>
+            <th>Titolo</th>
+            <th>Autore</th>
+            <th>Genere</th>
+
             <form action="" method="post">
-                <input type="text" name="titolo">
-                <input type="text" name="autore">
-                <select name="generi">
-                    <option value="*">--Seleziona genere--</option>
-                    <?php include "../includes/generi.php" ?>
-                </select>
-                <button type="submit" name="searchBookButton">Cerca</button>
+                <tr>
+                    <td><input type="text" name="titolo"></td>
+
+                    <td><input type="text" name="autore"></td>
+                    <td><select name="generi">
+                            <option value="*">--Seleziona genere--</option>
+                            <?php include "../includes/generi.php" ?>
+                        </select></td>
+
+                    <td><button type="submit" name="searchBookButton">Cerca</button></td>
+                </tr>
             </form>
         </table>
+
+        <br>
+        <br>
         <?php
 
 

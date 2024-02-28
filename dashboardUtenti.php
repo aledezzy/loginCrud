@@ -63,9 +63,9 @@ if (isset($_POST['restituisciLibro'])) {
 
 <body>
     <div class="sidebarGridTemplate" id="dashboardSidebar">
-        <a href="managers/manage_utenti.php">Gestione Utenti</a>
         <a href="managers/manage_libri.php">Gestione Libri</a>
         <a href="managers/manage_prestiti.php">Gestione Prestiti</a>
+        <a href="recensioni_libro.php">Recensioni</a>
     </div>
 
     <div class="itemsMargin flex" id="dashboardHeader" style="justify-content: end;">
