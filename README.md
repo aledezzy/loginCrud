@@ -37,5 +37,3 @@ Evitare di salvare le password in chiaro: utilizzare funzioni come crypt() o pas
 Utilizzare i prepare statements per prevenire attacchi di tipo SQL Injection
 Sanificare l'input dell'utente per rimuovere o neutralizzare i tag e i codici JavaScript dannosi (Cross Site Scripting).
 Extra: utilizzo di ulteriori tecniche per aumentare la sicurezza della pagina 
-
-Sesso con nani
